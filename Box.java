@@ -8,7 +8,7 @@ public class Box{
    }
    void showArea()
    {
-   	System.out.println("Area is"+height*width);
+   	System.out.println("Area is "+height*width);
    }
 
 }
