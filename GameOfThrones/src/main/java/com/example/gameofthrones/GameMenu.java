@@ -24,7 +24,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
-
+import javafx.fxml.FXMLLoader;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -40,7 +40,7 @@ public class GameMenu extends Application {
             music();
             Group root = new Group();
             //root.setPrefSize(800, 600);
-            InputStream is = Files.newInputStream(Paths.get("F:\\CAMERA\\Captures\\GOT1.jpg"));
+            InputStream is = Files.newInputStream(Paths.get("src\\main\\resources\\com\\example\\gameofthrones\\GOT1.jpg"));
             Image img = new Image(is);
             is.close();
 
@@ -79,7 +79,7 @@ public class GameMenu extends Application {
         }
     }
     public void music(){
-        String s = "F:\\CAMERA\\Captures\\GOT1.mp3";
+        String s = "src\\main\\resources\\com\\example\\gameofthrones\\GOT1.mp3";
         Media media = new Media(Paths.get(s).toUri().toString());
         mediaPlayer = new MediaPlayer(media);
         mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
@@ -186,7 +186,7 @@ public class GameMenu extends Application {
 
             menu0.getChildren().addAll(btnNewGame,btnResum,btnOptions,btnExit);
             menu1.getChildren().addAll(btnBack,btnSound,btnVideo);
-            menu2.getChildren().addAll(btnBackk,btnHouse1,btnHouse2,btnHouse3);
+            menu2.getChildren().addAll(btnHouse1,btnHouse2,btnHouse3,btnBackk);
             Rectangle bg = new Rectangle(800,600);
             bg.setFill(Color.GREY);
             bg.setOpacity(0.4);
