@@ -15,4 +15,4 @@ While fighting her opponent if her power becomes zero she will die and fail to r
 throne. But if she can defeat all three houses she will be successful to reclaim her father's throne.
 
 
-
+Valar Morgulis
