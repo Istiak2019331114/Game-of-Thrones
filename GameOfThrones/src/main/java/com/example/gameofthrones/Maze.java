@@ -7,6 +7,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane ;
 import javafx.util.Duration;
 
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -21,14 +23,7 @@ public class Maze implements Initializable {
     private  int playerCol=3;
     private TranslateTransition translate;
     private ImageView player;
-    private int[][] isPath = {
-            {0, 1, 1, 1, 1, 0},
-            {1, 1, 0, 0, 1, 0},
-            {1, 0, 0, 0, 1, 1},
-            {1, 0, 0, 0, 0, 1},
-            {1, 0, 0, 1, 1, 1},
-            {1, 1, 1, 1, 0, 0}
-    };
+    private int[][] isPath;
     private int[][] visited = new int[row][row];
 
     @Override
@@ -70,12 +65,31 @@ public class Maze implements Initializable {
     }
 
     void init() {
+        isPath = new int[row][row];
+
+        FileReader reader;
+
+        int random=1;
+        String path = "path"+Integer.toString(random)+".txt";
+
+
+        try
+        {
+            reader = new FileReader(path);
+            MakePath makePath = new MakePath(isPath,reader,row,row);
+
+        } catch (FileNotFoundException e) {
+            System.out.println("hi There");
+        }
+
         for (int gridX = 0; gridX < row; gridX++)
             for (int gridY = 0; gridY < row; gridY++) {
                 if(isPath[gridX][gridY]==1) visited[gridX][gridY]=0;
                 else visited[gridX][gridY] = 1;
             }
     }
+
+
     public void moveUp()
     {
         if(playerRow-1 >=0 && visited[playerRow-1][playerCol]==0)
