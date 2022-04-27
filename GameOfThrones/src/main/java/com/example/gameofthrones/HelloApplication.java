@@ -11,8 +11,9 @@ public class HelloApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("maze.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 600, 600);
-                Maze controler = fxmlLoader.getController();
+        Scene scene = new Scene(fxmlLoader.load());
+
+        Maze controler = fxmlLoader.getController();
         scene.setOnKeyPressed(keyEvent -> {
             System.out.println(keyEvent.getCode());
             switch (keyEvent.getCode())
@@ -36,6 +37,7 @@ public class HelloApplication extends Application {
         stage.setScene(scene);
         stage.show();
     }
+
 
     public static void main(String[] args) {
         launch();
