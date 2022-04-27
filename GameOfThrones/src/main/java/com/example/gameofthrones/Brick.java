@@ -12,14 +12,16 @@ import java.util.ResourceBundle;
 public class Brick {
     private int x;
     private int y;
-    private int length;
+    private int height;
+    private int width;
     private Image image;
     private ImageView imageview;
 
-    public Brick(int x, int y, int length, Image image, ImageView imageview) {
+    public Brick(int x, int y, int height,int width, Image image, ImageView imageview) {
         this.x = x;
         this.y = y;
-        this.length = length;
+        this.height = height;
+        this.width = width;
         this.image = image;
         this.imageview = imageview;
     }
@@ -29,8 +31,8 @@ public class Brick {
     {
         imageview.setX(x);
         imageview.setY(y);
-        imageview.setFitHeight(length);
-        imageview.setFitWidth(length);
+        imageview.setFitHeight(height);
+        imageview.setFitWidth(width);
         imageview.setImage(image);
     }
 }
