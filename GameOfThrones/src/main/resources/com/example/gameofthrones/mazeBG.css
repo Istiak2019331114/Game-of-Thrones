@@ -1,0 +1,4 @@
+#maze{
+   -fx-background-image: url("mazeBG.jpeg");
+   -fx-background-size: 100% 100%;
+}
