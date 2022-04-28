@@ -45,13 +45,13 @@ public class GameMenu extends Application {
             is.close();
 
             ImageView imgView = new ImageView(img);
-            imgView.setFitWidth(800);
-            imgView.setFitHeight(600);
+            imgView.setFitWidth(1200);
+            imgView.setFitHeight(700);
             gameMenu = new GMenu();
             gameMenu.setVisible(false);
             root.getChildren().addAll(imgView,gameMenu);
 
-            Scene scene = new Scene(root,800,600);
+            Scene scene = new Scene(root,1200,700);
             scene.setOnKeyPressed(event->{
                 if(event.getCode()== KeyCode.ESCAPE){
                     if(!gameMenu.isVisible()){
@@ -165,10 +165,10 @@ public class GameMenu extends Application {
             btnBackk.setOnMouseClicked(event->{
                 getChildren().add(menu0);
                 TranslateTransition tt = new TranslateTransition(Duration.seconds(0.25),menu2);
-                tt.setToX(menu1.getTranslateX()+offset);
+                tt.setToX(menu2.getTranslateX()+offset);
 
                 TranslateTransition tt1 = new TranslateTransition(Duration.seconds(0.5),menu0);
-                tt1.setToX(menu1.getTranslateX());
+                tt1.setToX(menu2.getTranslateX());
 
                 tt.play();
                 tt1.play();
@@ -187,9 +187,9 @@ public class GameMenu extends Application {
             menu0.getChildren().addAll(btnNewGame,btnResum,btnOptions,btnExit);
             menu1.getChildren().addAll(btnBack,btnSound,btnVideo);
             menu2.getChildren().addAll(btnHouse1,btnHouse2,btnHouse3,btnBackk);
-            Rectangle bg = new Rectangle(800,600);
+            Rectangle bg = new Rectangle(1200,700);
             bg.setFill(Color.GREY);
-            bg.setOpacity(0.4);
+            bg.setOpacity(0.6);
             getChildren().addAll(bg,menu0);
         }
     }
