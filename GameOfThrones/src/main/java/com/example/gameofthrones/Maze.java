@@ -1,14 +1,12 @@
 package com.example.gameofthrones;
-import com.example.leraringjavafx.Brick;
+
 import javafx.animation.TranslateTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane ;
 import javafx.util.Duration;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.net.URL;
@@ -26,10 +24,10 @@ public class Maze implements Initializable {
     private int rectangleWidth = screenWidth/col;
     private int rectangleHeight = screenHeight/row;
 
-    private int playerRow=3;
-    private  int playerCol=0;
+    private int playerimageViewRow=3;
+    private  int playerimageViewCol=0;
     private TranslateTransition translate;
-    private ImageView player;
+    private ImageView playerimageView;
     private int[][] isPath;
     private int[][] visited = new int[row][col];
 
@@ -38,21 +36,16 @@ public class Maze implements Initializable {
 
         init();
 
-        player = new ImageView();
-        player.setFitWidth(rectangleWidth);
-        player.setFitHeight(rectangleHeight);
-        player.setY(playerRow*rectangleHeight);
-        player.setX(playerCol*rectangleWidth);
-        player.setImage(new Image(String.valueOf(getClass().getResource("deneris.jpeg"))));
+        Player player = new Player(playerimageViewCol * rectangleWidth, playerimageViewRow * rectangleHeight, rectangleHeight, rectangleWidth, maze);
+        playerimageView = player.getImageView();
+        playerimageView.setSmooth(true);
 
-        maze.getChildren().add(player);
         maze.setPrefHeight(screenHeight);
         maze.setPrefWidth(screenWidth);
 
         translate = new TranslateTransition();
-        translate.setNode(player);
+        translate.setNode(playerimageView);
         translate.setDuration(Duration.millis(500));
-
 
         int gridX, gridY;
 
@@ -60,13 +53,9 @@ public class Maze implements Initializable {
             for (int j = 0; j < screenWidth; j += rectangleWidth) {
                 gridX = i / rectangleWidth;
                 gridY = j / rectangleHeight;
-                System.out.println(gridX +" "+gridY);
+
                 if (isPath[gridX][gridY] == 0) {
-                    ImageView imageView = new ImageView();
-                    Image image = new Image(String.valueOf(getClass().getResource("brick.png")));
-                    Brick brick = new Brick(j, i, rectangleHeight,rectangleWidth,image, imageView);
-                    maze.getChildren().add(imageView);
-                    brick.draw();
+                    Brick brick = new Brick(j, i, rectangleHeight,rectangleWidth,maze);
                 }
 
             }
@@ -97,15 +86,13 @@ public class Maze implements Initializable {
             }
     }
 
-
-
     // Moving Main Character
     public void moveUp()
     {
-        if(playerRow-1 >=0 && visited[playerRow-1][playerCol]==0)
+        if(playerimageViewRow-1 >=0 && visited[playerimageViewRow-1][playerimageViewCol]==0)
         {
-            playerRow-=1;
-            visited[playerRow][playerCol]=1;
+            playerimageViewRow-=1;
+            visited[playerimageViewRow][playerimageViewCol]=1;
             translate.setByY(-rectangleHeight);
             translate.setByX(0);
             translate.play();
@@ -113,10 +100,10 @@ public class Maze implements Initializable {
     }
     public void moveDown()
     {
-        if(playerRow+1<row && visited[playerRow+1][playerCol]==0)
+        if(playerimageViewRow+1<row && visited[playerimageViewRow+1][playerimageViewCol]==0)
         {
-            playerRow+=1;
-            visited[playerRow][playerCol]=1;
+            playerimageViewRow+=1;
+            visited[playerimageViewRow][playerimageViewCol]=1;
             translate.setByY(rectangleHeight);
             translate.setByX(0);
             translate.play();
@@ -124,10 +111,10 @@ public class Maze implements Initializable {
     }
     public void moveRight()
     {
-        if(playerCol+1<col && visited[playerRow][playerCol+1]==0)
+        if(playerimageViewCol+1<col && visited[playerimageViewRow][playerimageViewCol+1]==0)
         {
-            playerCol+=1;
-            visited[playerRow][playerCol]=1;
+            playerimageViewCol+=1;
+            visited[playerimageViewRow][playerimageViewCol]=1;
             translate.setByX(rectangleWidth);
             translate.setByY(0);
             translate.play();
@@ -135,10 +122,10 @@ public class Maze implements Initializable {
     }
     public void moveLeft()
     {
-        if(playerCol-1 >=0 && visited[playerRow][playerCol-1]==0)
+        if(playerimageViewCol-1 >=0 && visited[playerimageViewRow][playerimageViewCol-1]==0)
         {
-            playerCol-=1;
-            visited[playerRow][playerCol]=1;
+            playerimageViewCol-=1;
+            visited[playerimageViewRow][playerimageViewCol]=1;
             translate.setByX(-rectangleWidth);
             translate.setByY(0);
             translate.play();
