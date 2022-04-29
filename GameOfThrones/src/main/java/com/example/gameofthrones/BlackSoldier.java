@@ -7,9 +7,11 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
 public class BlackSoldier extends GameElement {
+    public int power;
 
-    public BlackSoldier(int x, int y, int height, int width, AnchorPane pane) {
+    public BlackSoldier(int x, int y, int height, int width,AnchorPane pane,int power) {
         super(x, y, height, width, pane);
+        this.power = power;
     }
    @Override
     public void draw()
