@@ -7,8 +7,10 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
 public class Tent extends GameElement {
-    public Tent(int x, int y, int height, int width, AnchorPane pane) {
+    public GameElement solider;
+    public Tent(int x, int y, int height, int width, AnchorPane pane, GameElement solider) {
         super(x, y, height, width, pane);
+        this.solider = solider;
     }
 
     public void draw()
