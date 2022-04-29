@@ -7,10 +7,11 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
 public class RedSoldier extends GameElement {
+    public int power;
 
-
-    public RedSoldier(int x, int y, int height, int width, AnchorPane pane) {
+    public RedSoldier(int x, int y, int height, int width, AnchorPane pane,int power) {
         super(x, y, height, width, pane);
+        this.power= power;
     }
 
     @Override
