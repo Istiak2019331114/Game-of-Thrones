@@ -4,7 +4,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 
-abstract public class GameElement {
+public abstract class GameElement {
    private  int x;
    private int y;
    private int height;
