@@ -10,24 +10,24 @@ import java.io.IOException;
 public class HelloApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("maze.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("level.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
 
-        Maze controler = fxmlLoader.getController();
+        Level controler = fxmlLoader.getController();
         scene.setOnKeyPressed(keyEvent -> {
             System.out.println(keyEvent.getCode());
             switch (keyEvent.getCode())
             {
-                case U:
+                case W:
                     controler.moveUp();
                     break;
-                case D:
+                case S:
                     controler.moveDown();
                     break;
-                case L:
+                case A:
                     controler.moveLeft();
                     break;
-                case R:
+                case D:
                     controler.moveRight();
                     break;
                 default: break;
