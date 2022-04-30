@@ -13,7 +13,6 @@ import javafx.scene.effect.Glow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.Media;
@@ -24,7 +23,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
-import javafx.fxml.FXMLLoader;
+
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -34,12 +33,13 @@ import static javafx.application.Application.launch;
 public class GameMenu extends Application {
     private GMenu gameMenu;
     private Scene scene;
+    private Group root;
     MediaPlayer mediaPlayer;
     @Override
     public void start(Stage stage) throws Exception{
         try {
             music();
-            Group root = new Group();
+            root = new Group();
             //root.setPrefSize(800, 600);
             InputStream path = Files.newInputStream(Paths.get("src\\main\\resources\\com\\example\\gameofthrones\\GOT1.jpg"));
             Image img = new Image(path);
@@ -52,7 +52,7 @@ public class GameMenu extends Application {
             gameMenu.setVisible(false);
             root.getChildren().addAll(imgView,gameMenu);
 
-             scene = new Scene(root,1200,700);
+            scene = new Scene(root,1200,700);
             scene.setOnKeyPressed(event->{
                 if(event.getCode()== KeyCode.ESCAPE){
                     if(!gameMenu.isVisible()){
@@ -74,6 +74,7 @@ public class GameMenu extends Application {
             scene.setFill(Color.TRANSPARENT);
             stage.initStyle(StageStyle.TRANSPARENT);
             stage.setScene(scene);
+          //  stage.setFullScreen(true);
             stage.show();
         }catch(Exception e){
             System.out.println(e);
@@ -180,7 +181,14 @@ public class GameMenu extends Application {
             });
 
             MenuButton btnSound = new MenuButton("SOUND");
+            btnSound.setOnMouseClicked(event->{
+
+            });
             MenuButton btnVideo = new MenuButton("VIDEO");
+            btnVideo.setOnMouseClicked(event->{
+              mediaPlayer.stop();
+              new Video(scene,root);
+            });
             MenuButton btnHouse1 = new MenuButton("HOUSE LANNISTER");
             MenuButton btnHouse2 = new MenuButton("HOUSE BARATHEON");
             MenuButton btnHouse3 = new MenuButton("HOUSE GREYJOY");
