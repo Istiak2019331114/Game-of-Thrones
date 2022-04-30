@@ -94,7 +94,7 @@ public  class Level{
         totalSoldier--;
     }
     private void setMazeBackground(){
-        String image = getClass().getResource("mazeBg.jpeg").toExternalForm();
+        String image = getClass().getResource("mazeBg.jpg").toExternalForm();
         maze.setStyle("-fx-background-image: url('" + image + "'); " +
                 "-fx-background-position: center center; " +
                 "-fx-background-size: 100% 100%;");
