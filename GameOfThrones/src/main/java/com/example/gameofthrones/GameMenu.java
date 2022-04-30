@@ -41,9 +41,9 @@ public class GameMenu extends Application {
             music();
             Group root = new Group();
             //root.setPrefSize(800, 600);
-            InputStream is = Files.newInputStream(Paths.get("src\\main\\resources\\com\\example\\gameofthrones\\GOT1.jpg"));
-            Image img = new Image(is);
-            is.close();
+            InputStream path = Files.newInputStream(Paths.get("src\\main\\resources\\com\\example\\gameofthrones\\GOT1.jpg"));
+            Image img = new Image(path);
+            path.close();
 
             ImageView imgView = new ImageView(img);
             imgView.setFitWidth(1200);
@@ -188,10 +188,10 @@ public class GameMenu extends Application {
             btnHouse1.setOnMouseClicked(event->{
                 new LevelOne(scene);
             });
-            btnHouse1.setOnMouseClicked(event->{
+            btnHouse2.setOnMouseClicked(event->{
                 new LevelTwo(scene);
             });
-            btnHouse1.setOnMouseClicked(event->{
+            btnHouse3.setOnMouseClicked(event->{
                 new LevelThree(scene);
             });
 
