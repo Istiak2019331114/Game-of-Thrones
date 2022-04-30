@@ -25,6 +25,7 @@ public  class Level{
     private int playerimageViewRow=3;
     private  int playerimageViewCol=0;
     private int numOfTextFile=1;
+    private int transitionTime= 250;
     private TranslateTransition translate;
     private ImageView playerimageView;
     // Row Column based
@@ -47,6 +48,7 @@ public  class Level{
 
         maze.setPrefHeight(screenHeight);
         maze.setPrefWidth(screenWidth);
+
         setMazeBackground();
 
         addPlayerToMaze();
@@ -102,7 +104,7 @@ public  class Level{
 
     private void addPlayerToMaze()
     {
-        Player player = new Player(playerimageViewCol * rectangleWidth, playerimageViewRow * rectangleHeight, rectangleHeight, rectangleWidth, maze,0);
+        Player player = new Player(playerimageViewCol * rectangleWidth, playerimageViewRow * rectangleHeight, rectangleHeight, rectangleWidth, maze,100);
         playerimageView = player.getImageView();
         playerimageView.setSmooth(true);
     }
@@ -110,7 +112,7 @@ public  class Level{
     {
         translate = new TranslateTransition();
         translate.setNode(playerimageView);
-        translate.setDuration(Duration.millis(250));
+        translate.setDuration(Duration.millis(transitionTime));
     }
 
     private void addTreeToMaze()
@@ -151,9 +153,7 @@ public  class Level{
         });
     }
 
-    // Moving Main Character
-    public void moveUp()
-    {
+     public void moveUp() {
         if(playerimageViewRow-1 >=0 && visited[playerimageViewRow-1][playerimageViewCol]==0)
         {
             playerimageViewRow-=1;
@@ -161,6 +161,7 @@ public  class Level{
             translate.setByY(-rectangleHeight);
             translate.setByX(0);
             translate.play();
+
         }
     }
     public void moveDown()
