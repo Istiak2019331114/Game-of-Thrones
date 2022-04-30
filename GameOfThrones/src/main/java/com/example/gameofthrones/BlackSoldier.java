@@ -18,7 +18,7 @@ public class BlackSoldier extends GameElement {
     {
         try
         {
-            image = new Image(new FileInputStream("src\\main\\resources\\com\\example\\gameofthrones\\blackSoldier.png"));
+            image = new Image(new FileInputStream("GameOfThrones\\src\\main\\resources\\com\\example\\gameofthrones\\blackSoldier.png"));
         } catch (FileNotFoundException e) {
             System.out.println(e);
         }
