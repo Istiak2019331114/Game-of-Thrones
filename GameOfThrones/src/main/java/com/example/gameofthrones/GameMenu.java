@@ -41,7 +41,7 @@ public class GameMenu extends Application {
             music();
             root = new Group();
             //root.setPrefSize(800, 600);
-            InputStream path = Files.newInputStream(Paths.get("src\\main\\resources\\com\\example\\gameofthrones\\GOT1.jpg"));
+            InputStream path = Files.newInputStream(Paths.get("GameOfThrones\\src\\main\\resources\\com\\example\\gameofthrones\\GOT1.jpg"));
             Image img = new Image(path);
             path.close();
 
@@ -81,7 +81,7 @@ public class GameMenu extends Application {
         }
     }
     public void music(){
-        String s = "src\\main\\resources\\com\\example\\gameofthrones\\GOT1.mp3";
+        String s = "GameOfThrones\\src\\main\\resources\\com\\example\\gameofthrones\\GOT1.mp3";
         Media media = new Media(Paths.get(s).toUri().toString());
         mediaPlayer = new MediaPlayer(media);
         mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
