@@ -7,10 +7,8 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
 public class Player extends GameElement{
-    public int power;
     public Player(int x, int y, int height, int width, AnchorPane pane, int power) {
-        super(x, y, height, width, pane);
-        this.power= power;
+        super(x, y, height, width, pane,power);
     }
 
     @Override
