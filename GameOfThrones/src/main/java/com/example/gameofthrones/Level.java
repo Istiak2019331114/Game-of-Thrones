@@ -1,22 +1,19 @@
 package com.example.gameofthrones;
 
 import javafx.animation.TranslateTransition;
-import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane ;
+import javafx.scene.layout.*;
 import javafx.util.Duration;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.net.URL;
-import java.util.ResourceBundle;
 
-public  class Level implements Initializable {
+public  class Level{
 
-    @FXML
     public AnchorPane maze;
-    private int screenWidth = 1080;
+    private Scene scene;
+    private int screenWidth = 1200;
     private int screenHeight = 700;
     public int totalSoldier=0;
     public int row = 7;
@@ -38,21 +35,31 @@ public  class Level implements Initializable {
     // Row Column based
     public GameElement[][] gameElements = new GameElement[row][col];
 
+    public Level(Scene scene) {
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
+        maze = new AnchorPane();
+
+        this.scene = scene;
+
+        this.scene.setRoot(maze);
 
         init();
 
-        addPlayerToMaze();
-
         maze.setPrefHeight(screenHeight);
         maze.setPrefWidth(screenWidth);
+        setMazeBackground();
+
+        addPlayerToMaze();
 
         addAnimationToPlayer();
 
         addBrickToMaze();
+
+        addListenerToScene();
+
     }
+
+
 
     void init() {
         isPath = new int[row][col];
@@ -68,7 +75,6 @@ public  class Level implements Initializable {
             reader = new FileReader(path);
             MakePath makePath = new MakePath(isPath,reader,row,col);
             calculateSoldiers();
-            System.out.println(totalSoldier);
 
         } catch (FileNotFoundException e) {
             System.out.println(e.toString());
@@ -80,12 +86,20 @@ public  class Level implements Initializable {
                 else visited[gridRow][gridCol] = 1;
             }
     }
+
     private void calculateSoldiers()
     {
         for(int i=0;i<row;i++)
             for (int j=0;j<col;j++) if(isPath[i][j]==1) totalSoldier++;
         totalSoldier--;
     }
+    private void setMazeBackground(){
+        String image = getClass().getResource("mazeBg.jpeg").toExternalForm();
+        maze.setStyle("-fx-background-image: url('" + image + "'); " +
+                "-fx-background-position: center center; " +
+                "-fx-background-size: 100% 100%;");
+    }
+
     private void addPlayerToMaze()
     {
         Player player = new Player(playerimageViewCol * rectangleWidth, playerimageViewRow * rectangleHeight, rectangleHeight, rectangleWidth, maze,0);
@@ -114,6 +128,27 @@ public  class Level implements Initializable {
                 }
 
             }
+    }
+    private void addListenerToScene()
+    {
+        scene.setOnKeyPressed(keyEvent -> {
+            switch (keyEvent.getCode())
+            {
+                case W:
+                    moveUp();
+                    break;
+                case S:
+                    moveDown();
+                    break;
+                case A:
+                    moveLeft();
+                    break;
+                case D:
+                    moveRight();
+                    break;
+                default: break;
+            }
+        });
     }
 
     // Moving Main Character
