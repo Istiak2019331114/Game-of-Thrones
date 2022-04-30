@@ -109,8 +109,8 @@ public  class Level implements Initializable {
                 gridCol = j / rectangleWidth;
 
                 if (isPath[gridRow][gridCol] == 0) {
-                    Brick brick = new Brick(j, i, rectangleHeight,rectangleWidth,maze);
-                    gameElements[gridRow][gridCol]= brick;
+                    Tree tree = new Tree(j, i, rectangleHeight,rectangleWidth,maze);
+                    gameElements[gridRow][gridCol]= tree;
                 }
 
             }
