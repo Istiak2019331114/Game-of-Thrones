@@ -7,12 +7,14 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
 public class Tent extends GameElement {
-    public GameElement solider;
+    private GameElement solider;
     public Tent(int x, int y, int height, int width, AnchorPane pane, GameElement solider) {
         super(x, y, height, width, pane);
         this.solider = solider;
+        solider.hideFromMaze();
     }
 
+    @Override
     public void draw()
     {
         try
@@ -21,5 +23,16 @@ public class Tent extends GameElement {
         } catch (FileNotFoundException e) {
             System.out.println(e);
         }
+    }
+    private void revealSoldier()
+    {
+        removeFromMaze();
+        solider.revealInMaze();
+    }
+    @Override
+    public boolean check(int power)
+    {
+        revealSoldier();
+        return solider.check(power);
     }
 }
