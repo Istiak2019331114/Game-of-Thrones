@@ -53,7 +53,7 @@ public  class Level{
 
         addAnimationToPlayer();
 
-        addBrickToMaze();
+        addTreeToMaze();
 
         addListenerToScene();
 
@@ -113,7 +113,7 @@ public  class Level{
         translate.setDuration(Duration.millis(250));
     }
 
-    private void addBrickToMaze()
+    private void addTreeToMaze()
     {
         int gridRow, gridCol;
 
