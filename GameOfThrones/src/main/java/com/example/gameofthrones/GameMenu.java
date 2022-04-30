@@ -33,6 +33,7 @@ import static javafx.application.Application.launch;
 
 public class GameMenu extends Application {
     private GMenu gameMenu;
+    private Scene scene;
     MediaPlayer mediaPlayer;
     @Override
     public void start(Stage stage) throws Exception{
@@ -51,7 +52,7 @@ public class GameMenu extends Application {
             gameMenu.setVisible(false);
             root.getChildren().addAll(imgView,gameMenu);
 
-            Scene scene = new Scene(root,1200,700);
+             scene = new Scene(root,1200,700);
             scene.setOnKeyPressed(event->{
                 if(event.getCode()== KeyCode.ESCAPE){
                     if(!gameMenu.isVisible()){
@@ -183,6 +184,16 @@ public class GameMenu extends Application {
             MenuButton btnHouse1 = new MenuButton("HOUSE LANNISTER");
             MenuButton btnHouse2 = new MenuButton("HOUSE BARATHEON");
             MenuButton btnHouse3 = new MenuButton("HOUSE GREYJOY");
+
+            btnHouse1.setOnMouseClicked(event->{
+                new LevelOne(scene);
+            });
+            btnHouse1.setOnMouseClicked(event->{
+                new LevelTwo(scene);
+            });
+            btnHouse1.setOnMouseClicked(event->{
+                new LevelThree(scene);
+            });
 
             menu0.getChildren().addAll(btnNewGame,btnResum,btnOptions,btnExit);
             menu1.getChildren().addAll(btnBack,btnSound,btnVideo);
