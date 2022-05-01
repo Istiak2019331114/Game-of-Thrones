@@ -194,13 +194,13 @@ public class GameMenu extends Application {
             MenuButton btnHouse3 = new MenuButton("HOUSE GREYJOY");
 
             btnHouse1.setOnMouseClicked(event->{
-                new LevelOne(scene);
+                new LevelOne(scene,root);
             });
             btnHouse2.setOnMouseClicked(event->{
-                new LevelTwo(scene);
+                new LevelTwo(scene,root);
             });
             btnHouse3.setOnMouseClicked(event->{
-                new LevelThree(scene);
+                new LevelThree(scene,root);
             });
 
             menu0.getChildren().addAll(btnNewGame,btnResum,btnOptions,btnExit);
