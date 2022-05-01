@@ -125,7 +125,6 @@ public abstract class GameElement {
    {
       cellPane.setOpacity(1.0);
       System.out.println("hi There");
-      sleep();
    }
 
    // For all except Tree
@@ -150,11 +149,6 @@ public abstract class GameElement {
    public AnchorPane getMaze()
    {
       return  maze;
-   }
-   private void sleep()
-   {
-     int cnt=1000000000;
-     while (cnt>=0) cnt--;
    }
 
 }
