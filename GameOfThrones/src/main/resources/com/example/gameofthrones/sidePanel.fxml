@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="powerShow" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="293.0" prefWidth="203.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.gameofthrones.sidePanel">
+   <children>
+      <Label layoutX="20.0" layoutY="36.0" text="Player Current Power :" textFill="#1bcbf7">
+         <font>
+            <Font name="System Bold Italic" size="14.0" />
+         </font>
+      </Label>
+      <TextArea fx:id="playerCurrentPower" layoutX="11.0" layoutY="56.0" prefHeight="20.0" prefWidth="178.0" />
+      <Label layoutX="13.0" layoutY="112.0" text="Red Solider killed counts :" textFill="#cc1717">
+         <font>
+            <Font name="System Bold Italic" size="14.0" />
+         </font>
+      </Label>
+      <TextArea fx:id="redSoldierKillCounts" layoutX="10.0" layoutY="132.0" prefHeight="39.0" prefWidth="178.0" />
+      <Label layoutX="7.0" layoutY="188.0" text="Black Solider killed counts :">
+         <font>
+            <Font name="System Bold Italic" size="14.0" />
+         </font>
+      </Label>
+      <TextArea fx:id="blackSoldierKillerCounts" layoutX="10.0" layoutY="216.0" prefHeight="30.0" prefWidth="178.0" />
+   </children>
+</AnchorPane>
