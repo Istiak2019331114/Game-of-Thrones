@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.Bloom?>
+<?import javafx.scene.effect.Glow?>
+<?import javafx.scene.effect.Light.Distant?>
+<?import javafx.scene.effect.Lighting?>
+<?import javafx.scene.effect.Shadow?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="sidePanel" prefHeight="325.0" prefWidth="203.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.gameofthrones.SidePanel">
+   <children>
+      <Label layoutX="16.0" layoutY="14.0" mouseTransparent="true" text="Player Current Power :" textFill="#1205ff">
+         <font>
+            <Font name="System Bold Italic" size="16.0" />
+         </font>
+         <effect>
+            <Bloom />
+         </effect>
+      </Label>
+      <Label fx:id="playerCurrentPower" layoutX="79.0" layoutY="51.0" text="100" textFill="#4700fa">
+         <font>
+            <Font name="System Bold Italic" size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="11.0" layoutY="90.0" mouseTransparent="true" text="Red Soldier Kill Counts :" textFill="#ae0a0a">
+         <font>
+            <Font name="System Bold Italic" size="16.0" />
+         </font>
+         <effect>
+            <Bloom>
+               <input>
+                  <Lighting>
+                     <bumpInput>
+                        <Shadow />
+                     </bumpInput>
+                     <light>
+                        <Light.Distant />
+                     </light>
+                  </Lighting>
+               </input>
+            </Bloom>
+         </effect>
+      </Label>
+      <Label fx:id="redSoldierKilledCounts" layoutX="84.0" layoutY="131.0" text="0" textFill="#ac0606">
+         <font>
+            <Font name="System Bold Italic" size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="4.0" layoutY="167.0" mouseTransparent="true" text="Black Soldier kill Counts :">
+         <font>
+            <Font name="System Bold Italic" size="16.0" />
+         </font>
+         <effect>
+            <Bloom />
+         </effect>
+      </Label>
+      <Label fx:id="blackSoldierKilledCounts" layoutX="84.0" layoutY="197.0" text="0">
+         <font>
+            <Font name="System Bold Italic" size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="40.0" layoutY="236.0" mouseTransparent="true" text="Current Level :" textFill="#4807e1">
+         <font>
+            <Font name="System Bold Italic" size="16.0" />
+         </font>
+         <effect>
+            <Bloom>
+               <input>
+                  <Glow />
+               </input>
+            </Bloom>
+         </effect>
+      </Label>
+      <Label fx:id="currentLevel" layoutX="84.0" layoutY="275.0" text="1" textFill="#4609ef">
+         <font>
+            <Font name="System Bold Italic" size="16.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>
