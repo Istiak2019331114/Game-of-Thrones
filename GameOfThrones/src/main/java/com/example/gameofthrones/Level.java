@@ -1,8 +1,11 @@
 package com.example.gameofthrones;
 
+import javafx.animation.FadeTransition;
 import javafx.animation.TranslateTransition;
+import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
 import javafx.util.Duration;
 
@@ -14,6 +17,7 @@ public  class Level{
     public AnchorPane maze;
     private Scene scene;
     private int screenWidth = 1200;
+    private Group prevroot;
     private int screenHeight = 700;
     public int totalSoldier=0;
     public int row = 7;
@@ -36,7 +40,7 @@ public  class Level{
     // Row Column based
     public GameElement[][] gameElements = new GameElement[row][col];
 
-    public Level(Scene scene) {
+    public Level(Scene scene,Group prevroot) {
 
         maze = new AnchorPane();
 
@@ -44,10 +48,14 @@ public  class Level{
 
         this.scene.setRoot(maze);
 
+        this.prevroot = prevroot;
+
         init();
 
         maze.setPrefHeight(screenHeight);
         maze.setPrefWidth(screenWidth);
+
+
 
         setMazeBackground();
 
@@ -57,8 +65,9 @@ public  class Level{
 
         addTreeToMaze();
 
-        addListenerToScene();
+      //  addListenerToScene();
 
+        backTOprevroot();
     }
 
 
@@ -101,7 +110,31 @@ public  class Level{
                 "-fx-background-position: center center; " +
                 "-fx-background-size: 100% 100%;");
     }
-
+  private void backTOprevroot(){
+      scene.setOnKeyPressed(keyEvent->{
+          if(keyEvent.getCode()== KeyCode.ESCAPE){
+              scene.setRoot(prevroot);
+          }
+          else{
+              switch (keyEvent.getCode())
+              {
+                  case W:
+                      moveUp();
+                      break;
+                  case S:
+                      moveDown();
+                      break;
+                  case A:
+                      moveLeft();
+                      break;
+                  case D:
+                      moveRight();
+                      break;
+                  default: break;
+              }
+          }
+      });
+  }
     private void addPlayerToMaze()
     {
         Player player = new Player(playerimageViewCol * rectangleWidth, playerimageViewRow * rectangleHeight, rectangleHeight, rectangleWidth, maze,100);
