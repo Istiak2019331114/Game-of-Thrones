@@ -15,31 +15,57 @@ public abstract class GameElement {
    private int height;
    private int width;
    private int compress=20;
-   private AnchorPane pane;
+   private AnchorPane maze;
    private int power;
+   private int imageViewHeight;
+   private int imageViewWidth;
+   private int imageViweX;
+   private int imageViweY;
+   private int sleeptime=1000;
+
    public Label powerLabel;
-   private ImageView imageView;
+   public ImageView imageView;
+   private AnchorPane cellPane=new AnchorPane();
    public Image image;
 
+
    // For Tree
-   public GameElement(int x, int y, int height, int width, AnchorPane pane) {
+   public GameElement(int x, int y, int height, int width, AnchorPane maze) {
       this.x = x;
       this.y = y;
       this.height = height;
       this.width = width;
-      this.pane= pane;
+      this.maze = maze;
+      imageViweX=0;
+      imageViweY=0;
+      imageViewHeight=height;
+      imageViewWidth=width;
       setImageView();
+      addCellPaneToMaze();
    }
    // For Soldiers
-   public GameElement(int x, int y, int height, int width, AnchorPane pane,int power) {
+   public GameElement(int x, int y, int height, int width, AnchorPane maze, int power) {
       this.x = x;
-      this.y = y+labelHeight;
-      this.height = height-labelHeight;
-      this.width = width-compress;
-      this.pane= pane;
+      this.y = y;
+      this.height = height;
+      this.width = width;
+      this.maze = maze;
       this.power= power;
+      imageViweX=compress/2;
+      imageViweY=labelHeight;
+      imageViewHeight=height-labelHeight;
+      imageViewWidth=width-compress;
       setImageView();
       setPowerLabel(power);
+      addCellPaneToMaze();
+   }
+
+   private void addCellPaneToMaze() {
+      cellPane.setTranslateX(x);
+      cellPane.setTranslateY(y);
+      cellPane.setPrefHeight(height);
+      cellPane.setPrefWidth(width);
+      maze.getChildren().add(cellPane);
    }
 
 
@@ -50,12 +76,11 @@ public abstract class GameElement {
       draw();
 
       imageView.setImage(image);
-      imageView.setX(x);
-      imageView.setY(y);
-      imageView.setFitHeight(height);
-      imageView.setFitWidth(width);
-
-      pane.getChildren().add(imageView);
+      imageView.setX(imageViweX);
+      imageView.setY(imageViweY);
+      imageView.setFitHeight(imageViewHeight);
+      imageView.setFitWidth(imageViewWidth);
+      cellPane.getChildren().add(imageView);
    }
    public void setPowerLabel(int power)
    {
@@ -65,10 +90,10 @@ public abstract class GameElement {
       setStyleToPowerLabelText();
 
       powerLabel.setPrefHeight(labelHeight);
-      powerLabel.setPrefWidth(width+compress);
-      powerLabel.setLayoutX(x);
-      powerLabel.setLayoutY(y-labelHeight);
-      pane.getChildren().add(powerLabel);
+      powerLabel.setPrefWidth(width);
+      powerLabel.setLayoutX(0);
+      powerLabel.setLayoutY(0);
+      cellPane.getChildren().add(powerLabel);
    }
 
    public  void setStyleToPowerLabelText()
@@ -82,26 +107,55 @@ public abstract class GameElement {
    }
 
    abstract public void draw();
-   // For Checking that
-   public boolean check(int power)
+   // Returns If this Solider can be defeated by player
+   public boolean check(GameElement player)
    {
-      return power>=this.power;
+      return player.getPower()>=power;
    }
    public void removeFromMaze()
    {
-      pane.getChildren().remove(imageView);
+      maze.getChildren().remove(cellPane);
    }
 
    public void hideFromMaze()
    {
-      getImageView().setOpacity(0.0);
+      cellPane.setOpacity(0.0);
    }
    public void revealInMaze()
    {
-      getImageView().setOpacity(1.0);
+      cellPane.setOpacity(1.0);
+      System.out.println("hi There");
+      sleep();
    }
-   public ImageView getImageView() {
-      return imageView;
+
+   // For all except Tree
+   public void updatePowerLabel(int newPower)
+   {
+      power=newPower;
+      powerLabel.setText(Integer.toString(power));
+
    }
+   // Updates Player Power for this Soldier
+   public void updatePlayerPower(Player player)
+   {
+
+   }
+   public AnchorPane getCellPane() {
+      return cellPane;
+   }
+   public int getPower()
+   {
+      return power;
+   }
+   public AnchorPane getMaze()
+   {
+      return  maze;
+   }
+   private void sleep()
+   {
+     int cnt=1000000000;
+     while (cnt>=0) cnt--;
+   }
+
 }
 
