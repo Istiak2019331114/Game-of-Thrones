@@ -1,11 +1,9 @@
 package com.example.gameofthrones;
 
-import javafx.animation.FadeTransition;
 import javafx.animation.TranslateTransition;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
 import javafx.util.Duration;
 
@@ -15,9 +13,9 @@ import java.io.FileReader;
 public  class Level{
 
     public AnchorPane maze;
-    private Scene scene;
-    private int screenWidth = 1200;
     private Group prevroot;
+    private Scene scene;
+    private int screenWidth = 1080;
     private int screenHeight = 700;
     public int totalSoldier=0;
     public int row = 7;
@@ -40,7 +38,7 @@ public  class Level{
     // Row Column based
     public GameElement[][] gameElements = new GameElement[row][col];
 
-    public Level(Scene scene,Group prevroot) {
+    public Level(Scene scene, Group prevroot) {
 
         maze = new AnchorPane();
 
@@ -53,9 +51,7 @@ public  class Level{
         init();
 
         maze.setPrefHeight(screenHeight);
-        maze.setPrefWidth(screenWidth);
-
-
+        maze.setPrefWidth(screenWidth+200);
 
         setMazeBackground();
 
@@ -65,9 +61,11 @@ public  class Level{
 
         addTreeToMaze();
 
-      //  addListenerToScene();
+        addListenerToScene();
+        BlackSoldier blackSoldier = new BlackSoldier(playerimageViewCol * rectangleWidth, (playerimageViewRow-1) * rectangleHeight, rectangleHeight, rectangleWidth, maze, 100);
+        RedSoldier redSoldier = new RedSoldier(playerimageViewCol * rectangleWidth, (playerimageViewRow-2) * rectangleHeight, rectangleHeight, rectangleWidth, maze, 100);
 
-        backTOprevroot();
+
     }
 
 
@@ -110,31 +108,7 @@ public  class Level{
                 "-fx-background-position: center center; " +
                 "-fx-background-size: 100% 100%;");
     }
-  private void backTOprevroot(){
-      scene.setOnKeyPressed(keyEvent->{
-          if(keyEvent.getCode()== KeyCode.ESCAPE){
-              scene.setRoot(prevroot);
-          }
-          else{
-              switch (keyEvent.getCode())
-              {
-                  case W:
-                      moveUp();
-                      break;
-                  case S:
-                      moveDown();
-                      break;
-                  case A:
-                      moveLeft();
-                      break;
-                  case D:
-                      moveRight();
-                      break;
-                  default: break;
-              }
-          }
-      });
-  }
+
     private void addPlayerToMaze()
     {
         Player player = new Player(playerimageViewCol * rectangleWidth, playerimageViewRow * rectangleHeight, rectangleHeight, rectangleWidth, maze,100);
@@ -181,12 +155,21 @@ public  class Level{
                 case D:
                     moveRight();
                     break;
+                case ESCAPE:
+                    backToPreRoot();
                 default: break;
             }
         });
     }
-
-     public void moveUp() {
+     private void sleep()
+     {
+         try{
+             Thread.sleep(transitionTime);
+         } catch (InterruptedException e) {
+             throw new RuntimeException(e);
+         }
+     }
+    private void moveUp() {
         if(playerimageViewRow-1 >=0 && visited[playerimageViewRow-1][playerimageViewCol]==0)
         {
             playerimageViewRow-=1;
@@ -194,10 +177,10 @@ public  class Level{
             translate.setByY(-rectangleHeight);
             translate.setByX(0);
             translate.play();
-
+            sleep();
         }
     }
-    public void moveDown()
+    private void moveDown()
     {
         if(playerimageViewRow+1<row && visited[playerimageViewRow+1][playerimageViewCol]==0)
         {
@@ -206,9 +189,10 @@ public  class Level{
             translate.setByY(rectangleHeight);
             translate.setByX(0);
             translate.play();
+            sleep();
         }
     }
-    public void moveRight()
+    private void moveRight()
     {
         if(playerimageViewCol+1<col && visited[playerimageViewRow][playerimageViewCol+1]==0)
         {
@@ -217,9 +201,10 @@ public  class Level{
             translate.setByX(rectangleWidth);
             translate.setByY(0);
             translate.play();
+            sleep();
         }
     }
-    public void moveLeft()
+    private void moveLeft()
     {
         if(playerimageViewCol-1 >=0 && visited[playerimageViewRow][playerimageViewCol-1]==0)
         {
@@ -228,7 +213,13 @@ public  class Level{
             translate.setByX(-rectangleWidth);
             translate.setByY(0);
             translate.play();
+            sleep();
         }
+    }
+
+    private void backToPreRoot()
+    {
+        scene.setRoot(prevroot);
     }
 
 
