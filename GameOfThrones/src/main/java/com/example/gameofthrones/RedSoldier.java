@@ -37,5 +37,11 @@ public class RedSoldier extends GameElement {
         powerLabel.setTextFill(Color.RED);
         powerLabel.setTextAlignment(TextAlignment.CENTER);
     }
+    // Updates Player Power for this Soldier
+    @Override
+    public void updatePlayerPower(Player player)
+    {
+        player.updatePowerLabel(player.getPower()-this.getPower());
+    }
 
 }
