@@ -35,7 +35,7 @@ public class Tent extends GameElement {
     public boolean check(GameElement player)
     {
         revealSoldier();
-        if(count==0)
+        if(count%2==0)
         {
             count++;
             return false;
