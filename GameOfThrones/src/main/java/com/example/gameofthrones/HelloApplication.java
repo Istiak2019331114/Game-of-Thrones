@@ -15,7 +15,7 @@ public class HelloApplication extends Application {
         //Group group = new Group();
 
        // Level level = new Level(scene,group); 
-        Parent root = FXMLLoader.load(getClass().getResource("powerShower.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("sidePanel.fxml"));
         Scene scene = new Scene(root);
         stage.setTitle("Hello!");
         stage.setScene(scene);
