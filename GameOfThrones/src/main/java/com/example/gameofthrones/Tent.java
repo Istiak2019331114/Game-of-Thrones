@@ -7,6 +7,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
 public class Tent extends GameElement {
+    private static int count = 0;
     private int sleeptime=3000;
     private GameElement solider;
     public Tent(int x, int y, int height, int width, AnchorPane pane, GameElement solider) {
@@ -34,8 +35,11 @@ public class Tent extends GameElement {
     public boolean check(GameElement player)
     {
         revealSoldier();
-        System.out.println("hi There");
-//        sleep();
+        if(count==0)
+        {
+            count++;
+            return false;
+        }
         return solider.check(player);
     }
     // Updates Player Power for this Soldier
