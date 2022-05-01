@@ -3,8 +3,14 @@ package com.example.gameofthrones;
 import javafx.animation.TranslateTransition;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontPosture;
+import javafx.scene.text.FontWeight;
 import javafx.util.Duration;
 
 import java.io.FileNotFoundException;
@@ -15,19 +21,23 @@ public  class Level{
     public AnchorPane maze;
     private Group prevroot;
     private Scene scene;
+    private String s;
     private int screenWidth = 1080;
     private int screenHeight = 700;
     public int totalSoldier=0;
     public int row = 7;
     public int col = 12;
 
+    private Label redSoliderKillCountsLabel,blackSoldierKillCountsLabel,playerPowerLabel,currentLevelLabel;
+
+   // private TextArea redSoliderKillCountsTextArea,blackSoldierKillCountsTextArea,playerPowerTextArea,currentLevelTextArea;
     public int rectangleWidth = screenWidth/col;
     public int rectangleHeight = screenHeight/row;
 
     private int playerimageViewRow=3;
     private  int playerimageViewCol=0;
     private int numOfTextFile=1;
-    private int transitionTime= 250;
+    private int transitionTime= 150;
     private TranslateTransition translate;
     private ImageView playerimageView;
     // Row Column based
@@ -51,7 +61,7 @@ public  class Level{
         init();
 
         maze.setPrefHeight(screenHeight);
-        maze.setPrefWidth(screenWidth+200);
+        maze.setPrefWidth(screenWidth+300);
 
         setMazeBackground();
 
@@ -61,15 +71,75 @@ public  class Level{
 
         addTreeToMaze();
 
+        addplayerPowerLabel();
+       // addplayerPowerTextArea(int  x);
+        addredSoliderKillCountsLabel();
+       // addredSoliderKillCountsTextArea(int x);
+        addblackSoliderKillCountsLabel();
+       // addblackSoliderKillCountsTextArea(int x);
+        addCurrentLevelLabel();
+       // addCurrentLevelTextArea(int x);
         addListenerToScene();
+
         BlackSoldier blackSoldier = new BlackSoldier(playerimageViewCol * rectangleWidth, (playerimageViewRow-1) * rectangleHeight, rectangleHeight, rectangleWidth, maze, 100);
         RedSoldier redSoldier = new RedSoldier(playerimageViewCol * rectangleWidth, (playerimageViewRow-2) * rectangleHeight, rectangleHeight, rectangleWidth, maze, 100);
-
+        maze.getChildren().addAll(playerPowerLabel,redSoliderKillCountsLabel,blackSoldierKillCountsLabel,currentLevelLabel);
 
     }
 
+ public void addplayerPowerLabel(){
 
+     playerPowerLabel = new Label("Player Power :");
+     playerPowerLabel.setTranslateX(1084);
+     playerPowerLabel.setTranslateY(20);
+     playerPowerLabel.setStyle("-fx-background-position: center center; " +
+             "-fx-background-color:transparent;");
 
+     playerPowerLabel.setFont(Font.font("Arial", FontWeight.NORMAL, FontPosture.ITALIC, 18));
+     playerPowerLabel.setTextFill(Color.DARKCYAN);
+
+ }
+ public void   addplayerPowerTextArea(){
+ }
+  public void addredSoliderKillCountsLabel(){
+      redSoliderKillCountsLabel = new Label("Red Soldier killed Counts :");
+      redSoliderKillCountsLabel.setTranslateX(1084);
+      redSoliderKillCountsLabel.setTranslateY(90);
+      redSoliderKillCountsLabel.setStyle("-fx-background-position: center center; " +
+              "-fx-background-color:transparent;");
+
+      redSoliderKillCountsLabel.setFont(Font.font("Arial", FontWeight.NORMAL, FontPosture.ITALIC, 18));
+      redSoliderKillCountsLabel.setTextFill(Color.DARKRED);
+  }
+  public void addredSoliderKillCountsTextArea(){
+
+  }
+  public void addblackSoliderKillCountsLabel(){
+      blackSoldierKillCountsLabel = new Label("Black Soldier killed Counts :");
+      blackSoldierKillCountsLabel.setTranslateX(1084);
+      blackSoldierKillCountsLabel.setTranslateY(160);
+      blackSoldierKillCountsLabel.setStyle("-fx-background-position: center center; " +
+              "-fx-background-color:transparent;");
+
+      blackSoldierKillCountsLabel.setFont(Font.font("Arial", FontWeight.NORMAL, FontPosture.ITALIC, 18));
+      blackSoldierKillCountsLabel.setTextFill(Color.BLACK);
+  }
+  public void addblackSoliderKillCountsTextArea(){
+
+    }
+    public void addCurrentLevelLabel(){
+        currentLevelLabel = new Label("Current Level :");
+        currentLevelLabel.setTranslateX(1084);
+        currentLevelLabel.setTranslateY(230);
+        currentLevelLabel.setStyle("-fx-background-position: center center; " +
+                "-fx-background-color:transparent;");
+
+        currentLevelLabel.setFont(Font.font("Arial", FontWeight.NORMAL, FontPosture.ITALIC, 18));
+        currentLevelLabel.setTextFill(Color.DARKMAGENTA);
+    }
+   public void addCurrentLevelTextArea(){
+
+   }
     void init() {
         isPath = new int[row][col];
 
