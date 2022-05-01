@@ -46,13 +46,13 @@ public class GameMenu extends Application {
             path.close();
 
             ImageView imgView = new ImageView(img);
-            imgView.setFitWidth(1200);
+            imgView.setFitWidth(1380);
             imgView.setFitHeight(700);
             gameMenu = new GMenu();
             gameMenu.setVisible(false);
             root.getChildren().addAll(imgView,gameMenu);
 
-            scene = new Scene(root,1200,700);
+            scene = new Scene(root,1380,700);
             scene.setOnKeyPressed(event->{
                 if(event.getCode()== KeyCode.ESCAPE){
                     if(!gameMenu.isVisible()){
@@ -206,7 +206,7 @@ public class GameMenu extends Application {
             menu0.getChildren().addAll(btnNewGame,btnResum,btnOptions,btnExit);
             menu1.getChildren().addAll(btnBack,btnSound,btnVideo);
             menu2.getChildren().addAll(btnHouse1,btnHouse2,btnHouse3,btnBackk);
-            Rectangle bg = new Rectangle(1200,700);
+            Rectangle bg = new Rectangle(1380,700);
             bg.setFill(Color.GREY);
             bg.setOpacity(0.6);
             getChildren().addAll(bg,menu0);
