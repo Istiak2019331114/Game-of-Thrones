@@ -1,5 +1,6 @@
 package com.example.gameofthrones;
 
+import javafx.scene.Group;
 import javafx.scene.Scene;
 
 
@@ -11,8 +12,8 @@ public class LevelOne extends Level{
     private final int maxNumOfTent=5;
 
 
-    public LevelOne(Scene scene) {
-        super(scene);
+    public LevelOne(Scene scene, Group prevroot) {
+        super(scene,prevroot);
     }
 
     private void setSoldiers()
