@@ -7,6 +7,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
 public class Tent extends GameElement {
+    private int sleeptime=3000;
     private GameElement solider;
     public Tent(int x, int y, int height, int width, AnchorPane pane, GameElement solider) {
         super(x, y, height, width, pane);
@@ -26,13 +27,35 @@ public class Tent extends GameElement {
     }
     private void revealSoldier()
     {
-        removeFromMaze();
+        super.removeFromMaze();
         solider.revealInMaze();
     }
     @Override
-    public boolean check(int power)
+    public boolean check(GameElement player)
     {
         revealSoldier();
-        return solider.check(power);
+        System.out.println("hi There");
+//        sleep();
+        return solider.check(player);
+    }
+    // Updates Player Power for this Soldier
+    @Override
+    public void updatePlayerPower(Player player)
+    {
+        solider.updatePlayerPower(player);
+    }
+    @Override
+    public void removeFromMaze()
+    {
+        getMaze().getChildren().remove(getCellPane());
+        getMaze().getChildren().remove(solider.getCellPane());
+    }
+    private void sleep()
+    {
+        try{
+            Thread.sleep(sleeptime);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
