@@ -11,12 +11,11 @@ import java.io.IOException;
 public class HelloApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-       // Scene scene = new Scene(new AnchorPane());
-        //Group group = new Group();
+        Scene scene = new Scene(new AnchorPane());
+        Group group = new Group();
 
-       // Level level = new Level(scene,group); 
-        Parent root = FXMLLoader.load(getClass().getResource("sidePanel.fxml"));
-        Scene scene = new Scene(root);
+        Level level = new Level(scene,group);
+
         stage.setTitle("Hello!");
         stage.setScene(scene);
         stage.show();
@@ -27,5 +26,3 @@ public class HelloApplication extends Application {
         launch();
     }
 }
-
-
