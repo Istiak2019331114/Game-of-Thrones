@@ -5,7 +5,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.util.Duration;
 
@@ -29,14 +28,21 @@ public  class Level{
 
     private int sidePanelWidth=250;
 
-    private int playerimageViewRow=3;
-    private  int playerimageViewCol=0;
+
+    private int playerCellPaneRow =3;
+
+
+
+    private  int playerCellPaneCol =0;
+    private Player player;
+    private AnchorPane playerCellPane;
     private int numOfTextFile=1;
     private int transitionTime= 250;
     private TranslateTransition translate;
-    private ImageView playerimageView;
+
     private Node sidePanel;
     private SidePanel sidePanelControler;
+    private GameElement curSoldier;
     // Row Column based
     public int[][] isPath;
     // Row Column based
@@ -71,8 +77,6 @@ public  class Level{
         addSidePanelToMaze();
 
         addListenerToScene();
-        BlackSoldier blackSoldier = new BlackSoldier(playerimageViewCol * rectangleWidth, (playerimageViewRow-1) * rectangleHeight, rectangleHeight, rectangleWidth, maze, 100);
-        RedSoldier redSoldier = new RedSoldier(playerimageViewCol * rectangleWidth, (playerimageViewRow-2) * rectangleHeight, rectangleHeight, rectangleWidth, maze, 100);
 
 
     }
@@ -131,14 +135,13 @@ public  class Level{
 
     private void addPlayerToMaze()
     {
-        Player player = new Player(playerimageViewCol * rectangleWidth, playerimageViewRow * rectangleHeight, rectangleHeight, rectangleWidth, maze,100);
-        playerimageView = player.getImageView();
-        playerimageView.setSmooth(true);
+        player = new Player(playerCellPaneCol * rectangleWidth, playerCellPaneRow * rectangleHeight, rectangleHeight, rectangleWidth, maze,100);
+        playerCellPane = player.getCellPane();
     }
     private void addAnimationToPlayer()
     {
         translate = new TranslateTransition();
-        translate.setNode(playerimageView);
+        translate.setNode(playerCellPane);
         translate.setDuration(Duration.millis(transitionTime));
     }
 
@@ -190,50 +193,70 @@ public  class Level{
          }
      }
     private void moveUp() {
-        if(playerimageViewRow-1 >=0 && visited[playerimageViewRow-1][playerimageViewCol]==0)
+        if(playerCellPaneRow -1 >=0 && visited[playerCellPaneRow -1][playerCellPaneCol]==0 )
         {
-            playerimageViewRow-=1;
-            visited[playerimageViewRow][playerimageViewCol]=1;
-            translate.setByY(-rectangleHeight);
-            translate.setByX(0);
-            translate.play();
-            sleep();
+            curSoldier=gameElements[playerCellPaneRow-1][playerCellPaneCol];
+            if(curSoldier.check(player)){
+                playerCellPaneRow -=1;
+                visited[playerCellPaneRow][playerCellPaneCol] = 1;
+                translate.setByY(-rectangleHeight);
+                translate.setByX(0);
+                gameElements[playerCellPaneRow][playerCellPaneCol].removeFromMaze();
+                translate.play();
+                curSoldier.updatePlayerPower(player);
+//            sleep();
+            }
         }
     }
     private void moveDown()
     {
-        if(playerimageViewRow+1<row && visited[playerimageViewRow+1][playerimageViewCol]==0)
+        if(playerCellPaneRow +1<row && visited[playerCellPaneRow +1][playerCellPaneCol]==0)
         {
-            playerimageViewRow+=1;
-            visited[playerimageViewRow][playerimageViewCol]=1;
+            curSoldier=gameElements[playerCellPaneRow+1][playerCellPaneCol];
+            if(curSoldier.check(player)){
+                playerCellPaneRow +=1;
+                visited[playerCellPaneRow][playerCellPaneCol] = 1;
             translate.setByY(rectangleHeight);
             translate.setByX(0);
-            translate.play();
-            sleep();
+                gameElements[playerCellPaneRow][playerCellPaneCol].removeFromMaze();
+                translate.play();
+                curSoldier.updatePlayerPower(player);
+//            sleep();
+            }
         }
     }
     private void moveRight()
     {
-        if(playerimageViewCol+1<col && visited[playerimageViewRow][playerimageViewCol+1]==0)
+        if(playerCellPaneCol +1<col && visited[playerCellPaneRow][playerCellPaneCol +1]==0)
         {
-            playerimageViewCol+=1;
-            visited[playerimageViewRow][playerimageViewCol]=1;
+            curSoldier=gameElements[playerCellPaneRow][playerCellPaneCol+1];
+            if(curSoldier.check(player)){
+                playerCellPaneCol +=1;
+                visited[playerCellPaneRow][playerCellPaneCol] = 1;
             translate.setByX(rectangleWidth);
             translate.setByY(0);
-            translate.play();
-            sleep();
+                gameElements[playerCellPaneRow][playerCellPaneCol].removeFromMaze();
+                translate.play();
+                curSoldier.updatePlayerPower(player);
+//            sleep();
+            }
         }
     }
     private void moveLeft()
     {
-        if(playerimageViewCol-1 >=0 && visited[playerimageViewRow][playerimageViewCol-1]==0)
+        if(playerCellPaneCol -1 >=0 && visited[playerCellPaneRow][playerCellPaneCol -1]==0)
         {
-            playerimageViewCol-=1;
-            visited[playerimageViewRow][playerimageViewCol]=1;
+            curSoldier=gameElements[playerCellPaneRow][playerCellPaneCol-1];
+            if(curSoldier.check(player)){
+                playerCellPaneCol -=1;
+                visited[playerCellPaneRow][playerCellPaneCol] = 1;
             translate.setByX(-rectangleWidth);
             translate.setByY(0);
-            translate.play();
-            sleep();
+                gameElements[playerCellPaneRow][playerCellPaneCol].removeFromMaze();
+                translate.play();
+                curSoldier.updatePlayerPower(player);
+//            sleep();
+            }
         }
     }
 
@@ -242,5 +265,10 @@ public  class Level{
         scene.setRoot(prevroot);
     }
 
-
+    public int getPlayerCellPaneRow() {
+        return playerCellPaneRow;
+    }
+    public int getPlayerCellPaneCol() {
+        return playerCellPaneCol;
+    }
 }
