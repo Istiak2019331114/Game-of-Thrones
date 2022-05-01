@@ -34,6 +34,8 @@ public class GameMenu extends Application {
     private GMenu gameMenu;
     private Scene scene;
     private Group root;
+    private int sceneWidth =1330;
+    private int sceneHeight=700;
     MediaPlayer mediaPlayer;
     @Override
     public void start(Stage stage) throws Exception{
@@ -46,13 +48,13 @@ public class GameMenu extends Application {
             path.close();
 
             ImageView imgView = new ImageView(img);
-            imgView.setFitWidth(1380);
-            imgView.setFitHeight(700);
+            imgView.setFitWidth(sceneWidth);
+            imgView.setFitHeight(sceneHeight);
             gameMenu = new GMenu();
             gameMenu.setVisible(false);
             root.getChildren().addAll(imgView,gameMenu);
 
-            scene = new Scene(root,1380,700);
+            scene = new Scene(root,sceneWidth,sceneHeight);
             scene.setOnKeyPressed(event->{
                 if(event.getCode()== KeyCode.ESCAPE){
                     if(!gameMenu.isVisible()){
@@ -74,7 +76,7 @@ public class GameMenu extends Application {
             scene.setFill(Color.TRANSPARENT);
             stage.initStyle(StageStyle.TRANSPARENT);
             stage.setScene(scene);
-          //  stage.setFullScreen(true);
+            //  stage.setFullScreen(true);
             stage.show();
         }catch(Exception e){
             System.out.println(e);
@@ -186,8 +188,8 @@ public class GameMenu extends Application {
             });
             MenuButton btnVideo = new MenuButton("VIDEO");
             btnVideo.setOnMouseClicked(event->{
-              mediaPlayer.stop();
-              new Video(scene,root);
+                mediaPlayer.stop();
+                new Video(scene,root);
             });
             MenuButton btnHouse1 = new MenuButton("HOUSE LANNISTER");
             MenuButton btnHouse2 = new MenuButton("HOUSE BARATHEON");
@@ -206,7 +208,7 @@ public class GameMenu extends Application {
             menu0.getChildren().addAll(btnNewGame,btnResum,btnOptions,btnExit);
             menu1.getChildren().addAll(btnBack,btnSound,btnVideo);
             menu2.getChildren().addAll(btnHouse1,btnHouse2,btnHouse3,btnBackk);
-            Rectangle bg = new Rectangle(1380,700);
+            Rectangle bg = new Rectangle(sceneWidth,sceneHeight);
             bg.setFill(Color.GREY);
             bg.setOpacity(0.6);
             getChildren().addAll(bg,menu0);
