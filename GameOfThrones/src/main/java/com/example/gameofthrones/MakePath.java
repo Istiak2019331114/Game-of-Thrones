@@ -23,7 +23,7 @@ public class MakePath {
             bufferedReader = new BufferedReader(fileReader);
             String line;
             int currentRow=0;
-            while ((line = bufferedReader.readLine())!=null)
+            while ((line = bufferedReader.readLine())!=null && currentRow<row)
             {
                 makeCurrentRowPath(currentRow,line);
                 currentRow++;
