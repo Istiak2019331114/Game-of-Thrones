@@ -22,14 +22,12 @@ public abstract class GameElement {
    private int imageViweX;
    private int imageViweY;
    private int sleeptime=1000;
-
+   private String imageName;
    public Label powerLabel;
    public ImageView imageView;
    private AnchorPane cellPane=new AnchorPane();
    public Image image;
-
-
-   // For Tree
+   // For Tent
    public GameElement(int x, int y, int height, int width, AnchorPane maze) {
       this.x = x;
       this.y = y;
@@ -43,6 +41,22 @@ public abstract class GameElement {
       setImageView();
       addCellPaneToMaze();
    }
+   // For Tree
+   public GameElement(int x, int y, int height, int width, AnchorPane maze,String imageName) {
+      this.x = x;
+      this.y = y;
+      this.height = height;
+      this.width = width;
+      this.maze = maze;
+      this.imageName =imageName;
+      imageViweX=0;
+      imageViweY=0;
+      imageViewHeight=height;
+      imageViewWidth=width;
+      setImageView();
+      addCellPaneToMaze();
+   }
+
    // For Soldiers
    public GameElement(int x, int y, int height, int width, AnchorPane maze, int power) {
       this.x = x;
@@ -149,6 +163,10 @@ public abstract class GameElement {
    public AnchorPane getMaze()
    {
       return  maze;
+   }
+   public String getImageName()
+   {
+      return imageName;
    }
 
 }
