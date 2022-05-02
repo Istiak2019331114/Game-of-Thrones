@@ -6,6 +6,7 @@ import javafx.util.Pair;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 
 public class LevelOne extends Level{
@@ -20,12 +21,18 @@ public class LevelOne extends Level{
     private int blackSoldierMaxPower=105;
     private int redSoldierMaxPower=80;
     private int increment=20;
-    private int basePower=50;
+    private int basePower=200;
     private int[] basePowerAtCol;
+
+    private Random rand = new Random(System.currentTimeMillis());
     private List<Pair<Integer,Integer>> availableCell;
+
+    private List<Pair<Integer,Integer>> winingPath=new ArrayList<Pair<Integer,Integer>>();
+
     public LevelOne(Scene scene, Group prevroot) {
         super(scene,prevroot);
         setSoldiers();
+        setSoldierInWiningPath();
     }
 
     @Override
@@ -37,7 +44,7 @@ public class LevelOne extends Level{
     public void setSidePanel()
     {
         setLevelName("House Greyjoy");
-        setHouseLogoName("House Greyjoy.png");
+        setHouseLogoName("House Greyjoy.jpg");
     }
     private void setSoldiers()
     {
@@ -127,7 +134,52 @@ public class LevelOne extends Level{
     }
     private int getRandom()
     {
-        return (int) (Math.random()*1000000.0);
+        int randNum = rand.nextInt();
+        if(randNum<0) return -randNum;
+        else return randNum;
+    }
+
+    public void setSoldierInWiningPath()
+    {
+        new WiningRoad(row,col,getPlayerCellPaneRow(),getPlayerCellPaneCol(),getVisited(),winingPath);
+        int curRow, curCol;
+        int demoPlayerPower=250;
+
+        int curSoldierPower;
+
+        GameElement oldSoldier,curSoldier;
+
+        while (winingPath.size()>0)
+        {
+           curRow =winingPath.get(winingPath.size()-1).getKey();
+           curCol = winingPath.get(winingPath.size()-1).getValue();
+
+           maze.getChildren().remove(gameElements[curRow][curCol].getCellPane());
+
+           curSoldierPower= basePowerAtCol[curCol]+(getRandom())%increment;
+
+           oldSoldier=gameElements[curRow][curCol];
+
+
+           if(demoPlayerPower-curSoldierPower-basePowerAtCol[curCol]-increment-increment>0)
+           {
+               curSoldier= new RedSoldier(curCol*rectangleWidth,curRow*rectangleHeight,rectangleHeight,rectangleWidth,maze,curSoldierPower);
+               demoPlayerPower-=curSoldierPower;
+           }
+           else{
+               curSoldier=new BlackSoldier(curCol*rectangleWidth,curRow*rectangleHeight,rectangleHeight,rectangleWidth,maze,curSoldierPower);
+               demoPlayerPower+=curSoldierPower;
+           }
+
+
+            if(oldSoldier instanceof Tent){
+                gameElements[curRow][curCol] = new Tent(curCol*rectangleWidth,curRow*rectangleHeight,rectangleHeight,rectangleWidth,maze,curSoldier);
+            }
+            else gameElements[curRow][curCol]=curSoldier;
+           winingPath.remove(winingPath.size()-1);
+        }
+
+
     }
 
 }
