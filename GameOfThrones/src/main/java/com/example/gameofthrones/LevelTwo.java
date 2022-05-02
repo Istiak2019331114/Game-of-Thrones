@@ -20,7 +20,7 @@ public class LevelTwo extends Level{
     private int blackSoldierMaxPower=105;
     private int redSoldierMaxPower=80;
     private int increment=25;
-    private int basePower=70;
+    private int basePower=50;
     private int[] basePowerAtCol;
     private List<Pair<Integer,Integer>> availableCell;
     public LevelTwo(Scene scene, Group prevroot) {
@@ -32,6 +32,12 @@ public class LevelTwo extends Level{
     public void setTheme() {
         setTreeName("levelTwoTree.png");
         setBackgroundName("levelTwoBG.jpg");
+    }
+    @Override
+    public void setSidePanel()
+    {
+        setLevelName("House Baratheon");
+        setHouseLogoName("House baratheon.jpg");
     }
     private void setSoldiers()
     {
