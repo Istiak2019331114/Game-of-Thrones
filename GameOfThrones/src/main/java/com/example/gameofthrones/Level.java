@@ -148,7 +148,7 @@ public abstract class Level{
 
     private void addPlayerToMaze()
     {
-        player = new Player(playerCellPaneCol * rectangleWidth, playerCellPaneRow * rectangleHeight, rectangleHeight, rectangleWidth, maze,100);
+        player = new Player(playerCellPaneCol * rectangleWidth, playerCellPaneRow * rectangleHeight, rectangleHeight, rectangleWidth, maze,250);
         playerCellPane = player.getCellPane();
     }
 
@@ -314,5 +314,8 @@ public abstract class Level{
     {
         this.houseLogoName= houseLogoName;
     }
-
+    public int[][] getVisited()
+    {
+        return visited;
+    }
 }
