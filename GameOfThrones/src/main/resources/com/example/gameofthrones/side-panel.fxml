@@ -12,7 +12,7 @@
 
 <AnchorPane fx:id="sidePanel" prefHeight="700.0" prefWidth="250.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.gameofthrones.SidePanel">
    <children>
-      <Label layoutX="51.0" layoutY="14.0" mouseTransparent="true" text="Player Current Power :" textFill="#1205ff">
+      <Label layoutX="34.0" layoutY="14.0" mouseTransparent="true" text="Player Current Power :" textFill="#1205ff">
          <font>
             <Font name="System Bold Italic" size="18.0" />
          </font>
