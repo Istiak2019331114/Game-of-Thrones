@@ -32,13 +32,16 @@ public abstract class Level{
     private int playerCellPaneRow =3;
 
     private  int playerCellPaneCol =0;
+    private int killCount=0;
     private Player player;
 
     private String treeName;
     private String backgroundName;
+    private String levelName;
+    private String houseLogoName;
     private AnchorPane playerCellPane;
     private int numOfTextFile=1;
-    private int transitionTime= 250;
+    private int transitionTime= 100;
     private TranslateTransition translate;
 
     private Node sidePanel;
@@ -120,8 +123,12 @@ public abstract class Level{
         } catch (IOException e) {
             System.out.println(e);
         }
-        maze.getChildren().add(sidePanel);
+        setSidePanel();
         sidePanelControler.setPlace(gameScreenWidth,0);
+        sidePanelControler.setPlayerPower(player.getPower());
+        sidePanelControler.setCurrentLevel(levelName);
+        sidePanelControler.setCurrentHouseLogo(houseLogoName);
+        maze.getChildren().add(sidePanel);
     }
     private void calculateSoldiers()
     {
@@ -129,7 +136,9 @@ public abstract class Level{
             for (int j=0;j<col;j++) if(isPath[i][j]==1) totalSoldier++;
         totalSoldier--;
     }
-    abstract public void setTheme();
+    public abstract void setTheme();
+    public abstract void setSidePanel();
+
     private void setMazeBackground(){
         String image = getClass().getResource(backgroundName).toExternalForm();
         maze.setStyle("-fx-background-image: url('" + image + "'); " +
@@ -210,6 +219,8 @@ public abstract class Level{
                 gameElements[playerCellPaneRow][playerCellPaneCol].removeFromMaze();
                 translate.play();
                 curSoldier.updatePlayerPower(player);
+                sidePanelControler.setPlayerPower(player.getPower());
+                sidePanelControler.setKillCount(++killCount);
 //            sleep();
             }
         }
@@ -227,6 +238,8 @@ public abstract class Level{
                 gameElements[playerCellPaneRow][playerCellPaneCol].removeFromMaze();
                 translate.play();
                 curSoldier.updatePlayerPower(player);
+                sidePanelControler.setPlayerPower(player.getPower());
+                sidePanelControler.setKillCount(++killCount);
 //            sleep();
             }
         }
@@ -244,6 +257,8 @@ public abstract class Level{
                 gameElements[playerCellPaneRow][playerCellPaneCol].removeFromMaze();
                 translate.play();
                 curSoldier.updatePlayerPower(player);
+                sidePanelControler.setPlayerPower(player.getPower());
+                sidePanelControler.setKillCount(++killCount);
 //            sleep();
             }
         }
@@ -261,6 +276,8 @@ public abstract class Level{
                 gameElements[playerCellPaneRow][playerCellPaneCol].removeFromMaze();
                 translate.play();
                 curSoldier.updatePlayerPower(player);
+                sidePanelControler.setPlayerPower(player.getPower());
+                sidePanelControler.setKillCount(++killCount);
 //            sleep();
             }
         }
@@ -289,4 +306,13 @@ public abstract class Level{
     {
         this.backgroundName= backgroundName;
     }
+    public void setLevelName(String levelName)
+    {
+        this.levelName=levelName;
+    }
+    public void setHouseLogoName(String houseLogoName)
+    {
+        this.houseLogoName= houseLogoName;
+    }
+
 }
