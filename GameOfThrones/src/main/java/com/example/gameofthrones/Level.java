@@ -12,7 +12,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
-public  class Level{
+public abstract class Level{
 
     public AnchorPane maze;
     private Group prevroot;
@@ -31,10 +31,11 @@ public  class Level{
 
     private int playerCellPaneRow =3;
 
-
-
     private  int playerCellPaneCol =0;
     private Player player;
+
+    private String treeName;
+    private String backgroundName;
     private AnchorPane playerCellPane;
     private int numOfTextFile=1;
     private int transitionTime= 250;
@@ -65,6 +66,8 @@ public  class Level{
 
         maze.setPrefHeight(gameScreenHeight);
         maze.setPrefWidth(gameScreenWidth +sidePanelWidth);
+
+        setTheme();
 
         setMazeBackground();
 
@@ -126,8 +129,9 @@ public  class Level{
             for (int j=0;j<col;j++) if(isPath[i][j]==1) totalSoldier++;
         totalSoldier--;
     }
+    abstract public void setTheme();
     private void setMazeBackground(){
-        String image = getClass().getResource("mazeBg.jpg").toExternalForm();
+        String image = getClass().getResource(backgroundName).toExternalForm();
         maze.setStyle("-fx-background-image: url('" + image + "'); " +
                 "-fx-background-position: center center; " +
                 "-fx-background-size: 100% 100%;");
@@ -138,12 +142,14 @@ public  class Level{
         player = new Player(playerCellPaneCol * rectangleWidth, playerCellPaneRow * rectangleHeight, rectangleHeight, rectangleWidth, maze,100);
         playerCellPane = player.getCellPane();
     }
+
     private void addAnimationToPlayer()
     {
         translate = new TranslateTransition();
         translate.setNode(playerCellPane);
         translate.setDuration(Duration.millis(transitionTime));
     }
+
 
     private void addTreeToMaze()
     {
@@ -155,7 +161,7 @@ public  class Level{
                 gridCol = j / rectangleWidth;
 
                 if (isPath[gridRow][gridCol] == 0) {
-                    Tree tree = new Tree(j, i, rectangleHeight,rectangleWidth,maze);
+                    Tree tree = new Tree(j, i, rectangleHeight,rectangleWidth,maze,treeName);
                     gameElements[gridRow][gridCol]= tree;
                 }
 
@@ -270,5 +276,17 @@ public  class Level{
     }
     public int getPlayerCellPaneCol() {
         return playerCellPaneCol;
+    }
+    public int getTotalSoldier()
+    {
+        return totalSoldier;
+    }
+    public void setTreeName(String treeName)
+    {
+        this.treeName= treeName;
+    }
+    public void setBackgroundName(String backgroundName)
+    {
+        this.backgroundName= backgroundName;
     }
 }
