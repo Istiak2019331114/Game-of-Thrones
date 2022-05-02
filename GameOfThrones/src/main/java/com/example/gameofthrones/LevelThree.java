@@ -37,7 +37,7 @@ public class LevelThree extends Level{
     public void setSidePanel()
     {
         setLevelName("House Lannister");
-        setHouseLogoName("House Lannister.jpg");
+        setHouseLogoName("House Lannister.png");
     }
     private void setSoldiers()
     {
