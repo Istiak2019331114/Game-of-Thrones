@@ -37,7 +37,7 @@ public class LevelTwo extends Level{
     public void setSidePanel()
     {
         setLevelName("House Baratheon");
-        setHouseLogoName("House baratheon.jpg");
+        setHouseLogoName("House Baratheon.png");
     }
     private void setSoldiers()
     {
