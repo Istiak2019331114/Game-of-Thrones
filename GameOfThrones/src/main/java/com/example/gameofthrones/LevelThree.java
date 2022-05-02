@@ -19,8 +19,8 @@ public class LevelThree extends Level{
 
     private int blackSoldierMaxPower=105;
     private int redSoldierMaxPower=80;
-    private int increment=20;
-    private int basePower=80;
+    private int increment=30;
+    private int basePower=50;
     private int[] basePowerAtCol;
     private List<Pair<Integer,Integer>> availableCell;
     public LevelThree(Scene scene, Group prevroot) {
@@ -32,6 +32,12 @@ public class LevelThree extends Level{
     public void setTheme() {
         setTreeName("levelThreeFire.png");
         setBackgroundName("levelThreeBG.jpg");
+    }
+    @Override
+    public void setSidePanel()
+    {
+        setLevelName("House Lannister");
+        setHouseLogoName("House Lannister.jpg");
     }
     private void setSoldiers()
     {
