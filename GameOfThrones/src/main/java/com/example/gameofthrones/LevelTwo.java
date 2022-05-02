@@ -30,8 +30,8 @@ public class LevelTwo extends Level{
 
     @Override
     public void setTheme() {
-        setTreeName("levelOneTree.png");
-        setBackgroundName("levelOneBG.jpg");
+        setTreeName("levelTwoTree.png");
+        setBackgroundName("levelTwoBG.jpg");
     }
     private void setSoldiers()
     {
