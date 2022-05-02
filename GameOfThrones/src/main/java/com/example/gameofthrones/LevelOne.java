@@ -20,7 +20,7 @@ public class LevelOne extends Level{
     private int blackSoldierMaxPower=105;
     private int redSoldierMaxPower=80;
     private int increment=20;
-    private int basePower=80;
+    private int basePower=50;
     private int[] basePowerAtCol;
     private List<Pair<Integer,Integer>> availableCell;
     public LevelOne(Scene scene, Group prevroot) {
@@ -32,6 +32,12 @@ public class LevelOne extends Level{
     public void setTheme() {
        setTreeName("levelOneTree.png");
        setBackgroundName("levelOneBG.jpg");
+    }
+    @Override
+    public void setSidePanel()
+    {
+        setLevelName("House Greyjoy");
+        setHouseLogoName("House Greyjoy.jpg");
     }
     private void setSoldiers()
     {
