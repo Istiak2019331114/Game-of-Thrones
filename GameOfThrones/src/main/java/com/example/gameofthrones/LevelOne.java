@@ -44,7 +44,7 @@ public class LevelOne extends Level{
     public void setSidePanel()
     {
         setLevelName("House Greyjoy");
-        setHouseLogoName("House Greyjoy.jpg");
+        setHouseLogoName("House Greyjoy.png");
     }
     private void setSoldiers()
     {
