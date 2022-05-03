@@ -7,10 +7,14 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.layout.*;
 import javafx.util.Duration;
+import javafx.util.Pair;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 public abstract class Level{
 
@@ -29,19 +33,43 @@ public abstract class Level{
     private int sidePanelWidth=250;
 
 
-    private int playerCellPaneRow =3;
+    private int playerRow =3;
 
-    private  int playerCellPaneCol =0;
+    private  int playerCol =0;
+
+    private int playerInitialRow =3;
+
+    private  int playerInitialCol =0;
+
+    private int destinationRow=3;
+    private int destinationCol=11;
     private int killCount=0;
-    private Player player;
 
+    private Player player;
+    private int numOfBlackSoldier;
+    private int numOfRedSoldier;
+    private int numOfTent;
+
+    public int maxNumOfRedSoldier =15;
+    public int minNumOfRedSoldier =10;
+    public int maxNumOfTent=5;
+    public int minNumOfTent=3;
+
+    public int powerIncrement =20;
+    public int soldierBasePower =200;
+
+    private int[] basePowerAtCol;
+
+    private Random rand = new Random(System.currentTimeMillis());
+    private List<Pair<Integer,Integer>> availableCell;
     private String treeName;
     private String backgroundName;
     private String levelName;
     private String houseLogoName;
     private AnchorPane playerCellPane;
-    private int numOfTextFile=1;
+    private int numOfTextFile=2;
     private int transitionTime= 100;
+
     private TranslateTransition translate;
 
     private Node sidePanel;
@@ -84,6 +112,11 @@ public abstract class Level{
 
         addListenerToScene();
 
+        setupLevel();
+
+        setSoldiers();
+
+        setSoldierInWiningPath();
 
     }
 
@@ -113,6 +146,8 @@ public abstract class Level{
                 if(isPath[gridRow][gridCol]==1) visited[gridRow][gridCol]=0;
                 else visited[gridRow][gridCol] = 1;
             }
+
+        visited[playerInitialRow][playerInitialCol]=1;
     }
     public void addSidePanelToMaze(){
         FXMLLoader loader=null;
@@ -138,6 +173,7 @@ public abstract class Level{
     }
     public abstract void setTheme();
     public abstract void setSidePanel();
+    public abstract void setupLevel();
 
     private void setMazeBackground(){
         String image = getClass().getResource(backgroundName).toExternalForm();
@@ -148,7 +184,7 @@ public abstract class Level{
 
     private void addPlayerToMaze()
     {
-        player = new Player(playerCellPaneCol * rectangleWidth, playerCellPaneRow * rectangleHeight, rectangleHeight, rectangleWidth, maze,250);
+        player = new Player(playerInitialCol * rectangleWidth, playerInitialRow * rectangleHeight, rectangleHeight, rectangleWidth, maze,250);
         playerCellPane = player.getCellPane();
     }
 
@@ -182,15 +218,19 @@ public abstract class Level{
             switch (keyEvent.getCode())
             {
                 case W:
+                case UP:
                     moveUp();
                     break;
                 case S:
+                case DOWN:
                     moveDown();
                     break;
                 case A:
+                case LEFT:
                     moveLeft();
                     break;
                 case D:
+                case RIGHT:
                     moveRight();
                     break;
                 case ESCAPE:
@@ -208,15 +248,15 @@ public abstract class Level{
          }
      }
     private void moveUp() {
-        if(playerCellPaneRow -1 >=0 && visited[playerCellPaneRow -1][playerCellPaneCol]==0 )
+        if(playerRow -1 >=0 && visited[playerRow -1][playerCol]==0 )
         {
-            curSoldier=gameElements[playerCellPaneRow-1][playerCellPaneCol];
+            curSoldier=gameElements[playerRow -1][playerCol];
             if(curSoldier.check(player)){
-                playerCellPaneRow -=1;
-                visited[playerCellPaneRow][playerCellPaneCol] = 1;
+                playerRow -=1;
+                visited[playerRow][playerCol] = 1;
                 translate.setByY(-rectangleHeight);
                 translate.setByX(0);
-                gameElements[playerCellPaneRow][playerCellPaneCol].removeFromMaze();
+                gameElements[playerRow][playerCol].removeFromMaze();
                 translate.play();
                 curSoldier.updatePlayerPower(player);
                 sidePanelControler.setPlayerPower(player.getPower());
@@ -224,18 +264,19 @@ public abstract class Level{
 //            sleep();
             }
         }
+        checkWiningCondition();
     }
     private void moveDown()
     {
-        if(playerCellPaneRow +1<row && visited[playerCellPaneRow +1][playerCellPaneCol]==0)
+        if(playerRow +1<row && visited[playerRow +1][playerCol]==0)
         {
-            curSoldier=gameElements[playerCellPaneRow+1][playerCellPaneCol];
+            curSoldier=gameElements[playerRow +1][playerCol];
             if(curSoldier.check(player)){
-                playerCellPaneRow +=1;
-                visited[playerCellPaneRow][playerCellPaneCol] = 1;
+                playerRow +=1;
+                visited[playerRow][playerCol] = 1;
             translate.setByY(rectangleHeight);
             translate.setByX(0);
-                gameElements[playerCellPaneRow][playerCellPaneCol].removeFromMaze();
+                gameElements[playerRow][playerCol].removeFromMaze();
                 translate.play();
                 curSoldier.updatePlayerPower(player);
                 sidePanelControler.setPlayerPower(player.getPower());
@@ -243,18 +284,19 @@ public abstract class Level{
 //            sleep();
             }
         }
+        checkWiningCondition();
     }
     private void moveRight()
     {
-        if(playerCellPaneCol +1<col && visited[playerCellPaneRow][playerCellPaneCol +1]==0)
+        if(playerCol +1<col && visited[playerRow][playerCol +1]==0)
         {
-            curSoldier=gameElements[playerCellPaneRow][playerCellPaneCol+1];
+            curSoldier=gameElements[playerRow][playerCol +1];
             if(curSoldier.check(player)){
-                playerCellPaneCol +=1;
-                visited[playerCellPaneRow][playerCellPaneCol] = 1;
+                playerCol +=1;
+                visited[playerRow][playerCol] = 1;
             translate.setByX(rectangleWidth);
             translate.setByY(0);
-                gameElements[playerCellPaneRow][playerCellPaneCol].removeFromMaze();
+                gameElements[playerRow][playerCol].removeFromMaze();
                 translate.play();
                 curSoldier.updatePlayerPower(player);
                 sidePanelControler.setPlayerPower(player.getPower());
@@ -262,18 +304,19 @@ public abstract class Level{
 //            sleep();
             }
         }
+        checkWiningCondition();
     }
     private void moveLeft()
     {
-        if(playerCellPaneCol -1 >=0 && visited[playerCellPaneRow][playerCellPaneCol -1]==0)
+        if(playerCol -1 >=0 && visited[playerRow][playerCol -1]==0)
         {
-            curSoldier=gameElements[playerCellPaneRow][playerCellPaneCol-1];
+            curSoldier=gameElements[playerRow][playerCol -1];
             if(curSoldier.check(player)){
-                playerCellPaneCol -=1;
-                visited[playerCellPaneRow][playerCellPaneCol] = 1;
+                playerCol -=1;
+                visited[playerRow][playerCol] = 1;
             translate.setByX(-rectangleWidth);
             translate.setByY(0);
-                gameElements[playerCellPaneRow][playerCellPaneCol].removeFromMaze();
+                gameElements[playerRow][playerCol].removeFromMaze();
                 translate.play();
                 curSoldier.updatePlayerPower(player);
                 sidePanelControler.setPlayerPower(player.getPower());
@@ -281,18 +324,158 @@ public abstract class Level{
 //            sleep();
             }
         }
+        checkWiningCondition();
+    }
+   //-----------------------------------------------------------------------------------------
+   private void setSoldiers()
+   {
+
+       setNumberOfSoldier();
+
+       getAvailableCell();
+
+       setBasePower();
+
+       int numOfPairs= availableCell.size();
+
+       int index;
+       int curRow, curCol;
+       int soldierPower;
+
+       Pair<Integer, Integer> curCell = new Pair<Integer, Integer>(0,0);
+
+       GameElement soldier,tent;
+
+       while (numOfPairs>0)
+       {
+           // selecting index randomly
+           index=getRandom()%numOfPairs;
+           curCell= availableCell.get(index);
+
+           availableCell.remove(index);
+           numOfPairs--;
+
+           curRow =curCell.getKey();
+           curCol=curCell.getValue();
+
+           soldierPower= basePowerAtCol[curCol]+(getRandom())% powerIncrement;
+
+           if(numOfTent>0)
+           {
+
+               if(getRandom()%2==0)
+               {
+                   soldier =new BlackSoldier(curCol*rectangleWidth,curRow*rectangleHeight,rectangleHeight,rectangleWidth,maze,soldierPower);
+               }
+               else {
+                   soldier =new RedSoldier(curCol*rectangleWidth,curRow*rectangleHeight,rectangleHeight,rectangleWidth,maze,soldierPower);
+
+               }
+               tent =new Tent(curCol*rectangleWidth,curRow*rectangleHeight,rectangleHeight,rectangleWidth,maze,soldier);
+               gameElements[curRow][curCol]=tent;
+               numOfTent--;
+           }
+
+           else if(numOfRedSoldier>0)
+           {
+               soldier =new RedSoldier(curCol*rectangleWidth,curRow*rectangleHeight,rectangleHeight,rectangleWidth,maze,soldierPower);
+               gameElements[curRow][curCol]=soldier;
+               numOfRedSoldier--;
+           }
+           else {
+               soldier =new BlackSoldier(curCol*rectangleWidth,curRow*rectangleHeight,rectangleHeight,rectangleWidth,maze,soldierPower);
+               gameElements[curRow][curCol]=soldier;
+               numOfBlackSoldier--;
+           }
+       }
+   }
+    private void setNumberOfSoldier()
+    {
+        numOfRedSoldier= minNumOfRedSoldier + getRandom()%(maxNumOfRedSoldier - minNumOfRedSoldier);
+        numOfTent=minNumOfTent+ getRandom()%(maxNumOfTent-minNumOfTent);
+        numOfBlackSoldier=totalSoldier-numOfTent-numOfRedSoldier;
+    }
+    private void getAvailableCell()
+    {
+        availableCell =  new ArrayList<Pair<Integer,Integer>>();
+
+        for(int i=0;i<row;i++)
+            for(int j=0;j<col;j++)
+            {
+                if(visited[i][j]==0)
+                {
+                    availableCell.add(new Pair<Integer,Integer>(i,j));
+                }
+            }
+    }
+    private void setBasePower()
+    {
+        basePowerAtCol = new int [col];
+        for(int i=0;i<col;i++) basePowerAtCol[i]= soldierBasePower +(powerIncrement *i);
     }
 
+    public void setSoldierInWiningPath()
+    {
+        List<Pair<Integer,Integer>> winingPath=new ArrayList<Pair<Integer,Integer>>();
+        int curRow, curCol;
+
+        int demoPlayerPower=250;
+
+        int curSoldierPower;
+
+        GameElement oldSoldier,curSoldier;
+
+        new WiningPath(row,col, playerInitialRow, playerInitialCol,visited,winingPath);
+
+
+        while (winingPath.size()>0)
+        {
+            curRow = winingPath.get(winingPath.size()-1).getKey();
+            curCol = winingPath.get(winingPath.size()-1).getValue();
+
+            maze.getChildren().remove(gameElements[curRow][curCol].getCellPane());
+
+            oldSoldier=gameElements[curRow][curCol];
+
+            curSoldierPower= basePowerAtCol[curCol]+(getRandom())% powerIncrement;
+
+            if(demoPlayerPower-curSoldierPower-basePowerAtCol[curCol] - powerIncrement >0)
+            {
+                curSoldier= new RedSoldier(curCol*rectangleWidth,curRow*rectangleHeight,rectangleHeight,rectangleWidth,maze,curSoldierPower);
+                demoPlayerPower-=curSoldierPower;
+            }
+            else{
+                curSoldier=new BlackSoldier(curCol*rectangleWidth,curRow*rectangleHeight,rectangleHeight,rectangleWidth,maze,curSoldierPower);
+                demoPlayerPower+=curSoldierPower;
+            }
+
+
+            if(oldSoldier instanceof Tent){
+                gameElements[curRow][curCol] = new Tent(curCol*rectangleWidth,curRow*rectangleHeight,rectangleHeight,rectangleWidth,maze,curSoldier);
+            }
+            else gameElements[curRow][curCol]=curSoldier;
+            winingPath.remove(winingPath.size()-1);
+        }
+
+    }
+//------------------------------------------------------------------------------------------------------------
+
+    private int getRandom()
+    {
+        int randNum = rand.nextInt();
+        if(randNum<0) return -randNum;
+        else return randNum;
+    }
     private void backToPreRoot()
     {
         scene.setRoot(prevroot);
     }
 
-    public int getPlayerCellPaneRow() {
-        return playerCellPaneRow;
+    public int getPlayerRow() {
+        return playerRow;
     }
-    public int getPlayerCellPaneCol() {
-        return playerCellPaneCol;
+    public int getPlayerCol() {
+        return playerCol;
     }
     public int getTotalSoldier()
     {
@@ -317,5 +500,13 @@ public abstract class Level{
     public int[][] getVisited()
     {
         return visited;
+    }
+
+    private void checkWiningCondition()
+    {
+        if(playerRow==destinationRow && playerCol==destinationCol)
+        {
+
+        }
     }
 }
