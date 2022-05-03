@@ -74,8 +74,8 @@ public class GameMenu extends Application {
                     }
                 }
             });
-            
-            Image MenuIcon = new Image("file:src\\main\\resources\\com\\example\\gameofthrones\\GameOfThrones.jpg");
+
+            Image MenuIcon = new Image("file:src\\main\\resources\\com\\example\\gameofthrones\\MenuIcon.jpg");
             stage.getIcons().add(MenuIcon);
             stage.setTitle("Game of Thrones");
             stage.setScene(scene);
