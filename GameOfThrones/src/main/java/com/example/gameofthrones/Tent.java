@@ -40,6 +40,7 @@ public class Tent extends GameElement {
             count++;
             return false;
         }
+        count++;
         return solider.check(player);
     }
     // Updates Player Power for this Soldier
