@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class WiningRoad {
+public class WiningPath {
     private int playerRow;
     private int playercol;
     private int numOfRow;
@@ -18,7 +18,7 @@ public class WiningRoad {
     private int destinationCol=11;
     private int [][] visited;
 
-    public WiningRoad(int numOfRow , int numOfCol,int playerRow,int playercol, int[][] trees, List<Pair<Integer, Integer>> path) {
+    public WiningPath(int numOfRow , int numOfCol, int playerRow, int playercol, int[][] trees, List<Pair<Integer, Integer>> path) {
         this.numOfRow = numOfRow;
         this.numOfCol =numOfCol;
         this.playerRow= playerRow;
