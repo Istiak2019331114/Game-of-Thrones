@@ -67,7 +67,7 @@ public abstract class Level{
     private String levelName;
     private String houseLogoName;
     private AnchorPane playerCellPane;
-    private int numOfTextFile=2;
+    private int numOfTextFile=6;
     private int transitionTime= 100;
 
     private TranslateTransition translate;
@@ -127,7 +127,7 @@ public abstract class Level{
 
         FileReader reader;
 
-        int random=((int)(Math.random()*1000))%numOfTextFile;
+        int random=getRandom()%numOfTextFile;
 
         String path = "src\\main\\resources\\com\\example\\gameofthrones\\path"+ Integer.toString(random)+".txt";
 
@@ -416,7 +416,7 @@ public abstract class Level{
 
     public void setSoldierInWiningPath()
     {
-        List<Pair<Integer,Integer>> winingPath=new ArrayList<Pair<Integer,Integer>>();
+        List<Pair<Integer,Integer>> winningPath=new ArrayList<Pair<Integer,Integer>>();
         int curRow, curCol;
 
         int demoPlayerPower=250;
@@ -425,13 +425,13 @@ public abstract class Level{
 
         GameElement oldSoldier,curSoldier;
 
-        new WiningPath(row,col, playerInitialRow, playerInitialCol,visited,winingPath);
+        new WinningPath(row,col, playerInitialRow, playerInitialCol,visited,winningPath);
 
 
-        while (winingPath.size()>0)
+        while (winningPath.size()>0)
         {
-            curRow = winingPath.get(winingPath.size()-1).getKey();
-            curCol = winingPath.get(winingPath.size()-1).getValue();
+            curRow = winningPath.get(winningPath.size()-1).getKey();
+            curCol = winningPath.get(winningPath.size()-1).getValue();
 
             maze.getChildren().remove(gameElements[curRow][curCol].getCellPane());
 
@@ -439,7 +439,7 @@ public abstract class Level{
 
             curSoldierPower= basePowerAtCol[curCol]+(getRandom())% powerIncrement;
 
-            if(demoPlayerPower-curSoldierPower-basePowerAtCol[curCol] - powerIncrement >0)
+            if(demoPlayerPower-curSoldierPower-basePowerAtCol[curCol] - powerIncrement-powerIncrement >0)
             {
                 curSoldier= new RedSoldier(curCol*rectangleWidth,curRow*rectangleHeight,rectangleHeight,rectangleWidth,maze,curSoldierPower);
                 demoPlayerPower-=curSoldierPower;
@@ -454,7 +454,7 @@ public abstract class Level{
                 gameElements[curRow][curCol] = new Tent(curCol*rectangleWidth,curRow*rectangleHeight,rectangleHeight,rectangleWidth,maze,curSoldier);
             }
             else gameElements[curRow][curCol]=curSoldier;
-            winingPath.remove(winingPath.size()-1);
+            winningPath.remove(winningPath.size()-1);
         }
 
     }
