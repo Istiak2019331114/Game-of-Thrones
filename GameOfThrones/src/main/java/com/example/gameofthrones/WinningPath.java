@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class WiningPath {
+public class WinningPath {
     private int playerRow;
     private int playercol;
     private int numOfRow;
@@ -17,14 +17,15 @@ public class WiningPath {
     private int destinationRow=3;
     private int destinationCol=11;
     private int [][] visited;
-
-    public WiningPath(int numOfRow , int numOfCol, int playerRow, int playercol, int[][] trees, List<Pair<Integer, Integer>> path) {
+    private int[][] tree;
+    public WinningPath(int numOfRow , int numOfCol, int playerRow, int playercol, int[][] trees, List<Pair<Integer, Integer>> path) {
         this.numOfRow = numOfRow;
         this.numOfCol =numOfCol;
         this.playerRow= playerRow;
         this.playercol= playercol;
         this.winingPath =path;
         visited = new int[numOfRow][numOfCol];
+        this.tree= trees;
         copyToVisited(trees);
         dfs(playerRow,playercol);
     }
@@ -33,7 +34,11 @@ public class WiningPath {
     {
         visited[curCellRow][curCellCol]=1;
 
-        if(curCellRow==destinationRow && curCellCol==destinationCol) return  true;
+        if(curCellRow==destinationRow && curCellCol==destinationCol)
+        {
+            System.out.println("Reached Destination!!!");
+            return  true;
+        }
 
         List<Pair<Integer,Integer>> availableCells = new ArrayList<Pair<Integer,Integer>>();
 
@@ -45,7 +50,10 @@ public class WiningPath {
 
              if(dfs(availableCells.get(index).getKey(),availableCells.get(index).getValue()))
              {
-                 System.out.println(availableCells.get(index));
+                 if(curCellRow-1==availableCells.get(index).getKey()) System.out.println("Up");
+                 if(curCellRow+1==availableCells.get(index).getKey()) System.out.println("Down");
+                 if(curCellCol+1==availableCells.get(index).getValue()) System.out.println("Right");
+                 if(curCellCol-1==availableCells.get(index).getValue()) System.out.println("Left");
                  winingPath.add(availableCells.get(index));
                  return true;
              }
@@ -70,6 +78,9 @@ public class WiningPath {
         if(isAvailable(curCellRow+1,curCellCol)) availableCells.add(new Pair<>(curCellRow+1,curCellCol));
         //Right
         if(isAvailable(curCellRow,curCellCol+1)) availableCells.add(new Pair<>(curCellRow,curCellCol+1));
+        //Left
+        if(isAvailable(curCellRow,curCellCol-1)) availableCells.add(new Pair<>(curCellRow,curCellCol-1));
+
 
     }
 
@@ -81,7 +92,7 @@ public class WiningPath {
 
     private int getRandom()
     {
-        int randNum = rand.nextInt();
+        int randNum = rand.nextInt()%rand.nextInt();
         if(randNum<0) return -randNum;
         else return randNum;
     }
