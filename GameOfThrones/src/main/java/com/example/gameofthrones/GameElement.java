@@ -31,7 +31,7 @@ public abstract class GameElement {
    public GameElement(int x, int y, int height, int width, AnchorPane maze) {
       this.x = x;
       this.y = y;
-      this.height = height;
+      this.height = height-10;
       this.width = width;
       this.maze = maze;
       imageViweX=0;
@@ -138,7 +138,6 @@ public abstract class GameElement {
    public void revealInMaze()
    {
       cellPane.setOpacity(1.0);
-      System.out.println("hi There");
    }
 
    // For all except Tree
