@@ -46,15 +46,16 @@ public class GameMenu extends Application {
             InputStream path = Files.newInputStream(Paths.get("src\\main\\resources\\com\\example\\gameofthrones\\GOT1.jpg"));
             Image img = new Image(path);
             path.close();
-
             ImageView backGroundImgView = new ImageView(img);
             backGroundImgView.setFitWidth(sceneWidth);
             backGroundImgView.setFitHeight(sceneHeight);
+
             gameMenuItems = new GameMenuItems();
             gameMenuItems.setVisible(false);
-            root.getChildren().addAll(backGroundImgView, gameMenuItems);
 
+            root.getChildren().addAll(backGroundImgView, gameMenuItems);
             scene = new Scene(root,sceneWidth,sceneHeight);
+
             scene.setOnKeyPressed(event->{
                 if(event.getCode()== KeyCode.ESCAPE){
                     if(!gameMenuItems.isVisible()){
@@ -73,10 +74,11 @@ public class GameMenu extends Application {
                     }
                 }
             });
-            scene.setFill(Color.TRANSPARENT);
-            stage.initStyle(StageStyle.TRANSPARENT);
+            
+            Image MenuIcon = new Image("file:src\\main\\resources\\com\\example\\gameofthrones\\GameOfThrones.jpg");
+            stage.getIcons().add(MenuIcon);
+            stage.setTitle("Game of Thrones");
             stage.setScene(scene);
-            //  stage.setFullScreen(true);
             stage.show();
         }catch(Exception e){
             System.out.println(e);
