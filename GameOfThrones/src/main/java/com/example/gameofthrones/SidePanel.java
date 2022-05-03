@@ -41,7 +41,6 @@ public class SidePanel implements Initializable {
     }
     public void setCurrentLevel(String levelName) {
         currentLevel.setText(levelName);
-        System.out.println(levelName);
     }
     public void setCurrentHouseLogo(String imageName){
         String path =  "src\\main\\resources\\com\\example\\gameofthrones\\"+imageName;
