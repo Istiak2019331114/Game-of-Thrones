@@ -67,7 +67,7 @@ public abstract class Level{
     private String levelName;
     private String houseLogoName;
     private AnchorPane playerCellPane;
-    private int numOfTextFile=6;
+    private int numOfTextFile=20;
     private int transitionTime= 100;
 
     private TranslateTransition translate;
