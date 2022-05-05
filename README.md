@@ -1,4 +1,4 @@
-# Game-of-Thornes
+# Game-of-Thrones
 A single player brainstorming game
 
 Story and rules :
