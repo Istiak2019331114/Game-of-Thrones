@@ -23,14 +23,14 @@ public class LevelTwo extends Level{
     public void setSidePanel()
     {
         setLevelName("House Baratheon");
-        setHouseLogoName("House baratheon.png");
+        setHouseLogoName("House Baratheon.png");
     }
     @Override
     public void setupLevel() {
         maxNumOfRedSoldier = (int) ( getTotalSoldier() * 0.5);
-        minNumOfRedSoldier =(int) ( getTotalSoldier() * 0.4);
-        maxNumOfTent=(int) ( getTotalSoldier() * 0.2);
-        minNumOfTent=(int) ( getTotalSoldier() * 0.15);
+        minNumOfRedSoldier =(int) ( getTotalSoldier() * 0.45);
+        maxNumOfTent=(int) ( getTotalSoldier() * 0.25);
+        minNumOfTent=(int) ( getTotalSoldier() * 0.2);
         powerIncrement =15;
         soldierBasePower =200;
     }
