@@ -29,10 +29,10 @@ public class LevelOne extends Level{
 
     @Override
     public void setupLevel() {
-        maxNumOfRedSoldier = (int) ( getTotalSoldier() * 0.4);
-        minNumOfRedSoldier =(int) ( getTotalSoldier() * 0.3);
-        maxNumOfTent=(int) ( getTotalSoldier() * 0.15);
-        minNumOfTent=(int) ( getTotalSoldier() * 0.1);
+        maxNumOfRedSoldier = (int) ( getTotalSoldier() * 0.45);
+        minNumOfRedSoldier =(int) ( getTotalSoldier() * 0.4);
+        maxNumOfTent=(int) ( getTotalSoldier() * 0.20);
+        minNumOfTent=(int) ( getTotalSoldier() * 0.15);
         powerIncrement =20;
         soldierBasePower =200;
     }
