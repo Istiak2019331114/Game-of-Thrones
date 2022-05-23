@@ -28,8 +28,8 @@ public class LevelThree extends Level{
     }
     @Override
     public void setupLevel() {
-        maxNumOfRedSoldier = (int) ( getTotalSoldier() * 0.6);
-        minNumOfRedSoldier =(int) ( getTotalSoldier() * 0.5);
+        maxNumOfRedSoldier = (int) ( getTotalSoldier() * 0.5);
+        minNumOfRedSoldier =(int) ( getTotalSoldier() * 0.45);
         maxNumOfTent=(int) ( getTotalSoldier() * 0.25);
         minNumOfTent=(int) ( getTotalSoldier() * 0.2);
         powerIncrement =10;
