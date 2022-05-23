@@ -79,7 +79,7 @@ public class WinningPath {
         //Right
         if(isAvailable(curCellRow,curCellCol+1)) availableCells.add(new Pair<>(curCellRow,curCellCol+1));
         //Left
-        if(isAvailable(curCellRow,curCellCol-1)) availableCells.add(new Pair<>(curCellRow,curCellCol-1));
+//        if(isAvailable(curCellRow,curCellCol-1)) availableCells.add(new Pair<>(curCellRow,curCellCol-1));
 
 
     }
