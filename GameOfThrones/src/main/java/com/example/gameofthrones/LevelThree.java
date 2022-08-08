@@ -2,17 +2,13 @@ package com.example.gameofthrones;
 
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.util.Pair;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
 
 
 public class LevelThree extends Level{
 
-    public LevelThree(Scene scene, Group prevroot) {
-        super(scene,prevroot);
+    public LevelThree(Scene scene, Group prevroot, LevelCount levelCompleted) {
+        super(scene,prevroot,levelCompleted);
+        levelNumber=1;
     }
 
     @Override
@@ -32,8 +28,7 @@ public class LevelThree extends Level{
         minNumOfRedSoldier =(int) ( getTotalSoldier() * 0.45);
         maxNumOfTent=(int) ( getTotalSoldier() * 0.25);
         minNumOfTent=(int) ( getTotalSoldier() * 0.2);
-        powerIncrement =10;
+        powerIncrement =20;
         soldierBasePower =200;
     }
-
 }
