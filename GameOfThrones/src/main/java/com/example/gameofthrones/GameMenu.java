@@ -33,6 +33,7 @@ import static javafx.application.Application.launch;
 public class GameMenu extends Application {
     private GameMenuItems gameMenuItems;
     private Scene scene;
+    private static int levelCompleted = 1;
     private Group root;
     private int sceneWidth =1330;
     private int sceneHeight=700;
@@ -51,7 +52,7 @@ public class GameMenu extends Application {
             backGroundImgView.setFitHeight(sceneHeight);
 
             gameMenuItems = new GameMenuItems();
-            gameMenuItems.setVisible(false);
+            gameMenuItems.setVisible(true);
 
             root.getChildren().addAll(backGroundImgView, gameMenuItems);
             scene = new Scene(root,sceneWidth,sceneHeight);
@@ -84,6 +85,7 @@ public class GameMenu extends Application {
             System.out.println(e);
         }
     }
+
     public void music(){
         String s = "src\\main\\resources\\com\\example\\gameofthrones\\GOT1.mp3";
         Media media = new Media(Paths.get(s).toUri().toString());
@@ -193,19 +195,20 @@ public class GameMenu extends Application {
                 mediaPlayer.stop();
                 new Video(scene,root);
             });
-            MenuButton btnHouseLannister = new MenuButton("HOUSE LANNISTER");
-            MenuButton btnHouseBaratheon = new MenuButton("HOUSE BARATHEON");
-            MenuButton btnHouseGreyjoy = new MenuButton("HOUSE GREYJOY");
+            MenuButton btnHouseGreyjoy = new MenuButton("HOUSE GREYJOY",0);
+            MenuButton btnHouseBaratheon = new MenuButton("HOUSE BARATHEON",1);
+            MenuButton btnHouseLannister = new MenuButton("HOUSE LANNISTER",2);
 
             btnHouseGreyjoy.setOnMouseClicked(event->{
-                new LevelOne(scene,root);
-            });
-            btnHouseLannister.setOnMouseClicked(event->{
-                new LevelThree(scene,root);
+                if(0 <= levelCompleted)  new LevelOne(scene,root);
             });
             btnHouseBaratheon.setOnMouseClicked(event->{
-                new LevelTwo(scene,root);
+                if(1 <= levelCompleted)  new LevelTwo(scene,root);
             });
+            btnHouseLannister.setOnMouseClicked(event->{
+                if(2 <= levelCompleted)   new LevelThree(scene,root);
+            });
+
 
 
             homeMenu.getChildren().addAll(btnNewGame,btnResum,btnOptions,btnExit);
@@ -213,36 +216,52 @@ public class GameMenu extends Application {
             newGameMenu.getChildren().addAll(btnHouseGreyjoy,btnHouseBaratheon,btnHouseLannister,btnBackk);
             Rectangle bg = new Rectangle(sceneWidth,sceneHeight);
             bg.setFill(Color.GREY);
-            bg.setOpacity(0.6);
+            bg.setOpacity(0);
             getChildren().addAll(bg,homeMenu);
         }
     }
     private static class MenuButton extends StackPane{
         private Text text;
+        private int levelNumber = 0;
+       private Rectangle RectbackGround;
         public MenuButton(String name){
-            text = new Text(name);
-            text.setFont(text.getFont().font(20));
 
-            Rectangle RectbackGround = new Rectangle(250,30);
-            RectbackGround.setOpacity(0.7);
-            RectbackGround.setFill(Color.BLACK);
-            RectbackGround.setEffect(new GaussianBlur(3.5));
+            setText(name);
 
-            setAlignment(Pos.CENTER_LEFT);
-            setRotate(-0.5);
-            getChildren().addAll(RectbackGround,text);
+            setRectbackGround();
 
+            setAlignment();
+
+            addMouseListener();
+
+        }
+        public MenuButton(String name, int levelNumber){
+
+            setText(name);
+            this.levelNumber = levelNumber;
+            setRectbackGround();
+
+            setAlignment();
+
+            addMouseListener();
+
+        }
+        private void addMouseListener(){
             setOnMouseEntered(event->{
-                RectbackGround.setTranslateX(10);
-                text.setTranslateX(10);
-                RectbackGround.setFill(Color.WHITE);
-                text.setFill(Color.BLACK);
+                if(levelNumber <= levelCompleted) {
+                    RectbackGround.setTranslateX(10);
+                    text.setTranslateX(10);
+                    RectbackGround.setFill(Color.WHITE);
+                    text.setFill(Color.BLACK);
+                }
             });
             setOnMouseExited(event->{
-                RectbackGround.setTranslateX(0);
-                text.setTranslateX(0);
-                RectbackGround.setFill(Color.BLACK);
-                text.setFill(Color.WHITE);
+                if(levelNumber <= levelCompleted) {
+                    RectbackGround.setTranslateX(0);
+                    text.setTranslateX(0);
+                    RectbackGround.setFill(Color.BLACK);
+                    text.setFill(Color.WHITE);
+                }
             });
             DropShadow dropShadow = new DropShadow(50,Color.WHITE);
             dropShadow.setInput(new Glow());
@@ -250,8 +269,29 @@ public class GameMenu extends Application {
             setOnMousePressed(event-> setEffect(dropShadow));
             setOnMouseReleased(event-> setEffect(null));
         }
+        private void setText(String name){
+            text = new Text(name);
+            text.setFont(text.getFont().font(20));
+        }
+        private void setRectbackGround(){
+            RectbackGround = new Rectangle(250,30);
+            RectbackGround.setOpacity(0.7);
+            RectbackGround.setFill(Color.BLACK);
+            RectbackGround.setEffect(new GaussianBlur(3.5));
+        }
+        private void setAlignment(){
+            setAlignment(Pos.CENTER_LEFT);
+            setRotate(-0.5);
+            getChildren().addAll(RectbackGround,text);
+        }
     }
+   private static class levelButton extends MenuButton{
 
+       public levelButton(String name) {
+           super(name);
+       }
+
+   }
     public static void main(String[] args) {
         launch(args);
     }
