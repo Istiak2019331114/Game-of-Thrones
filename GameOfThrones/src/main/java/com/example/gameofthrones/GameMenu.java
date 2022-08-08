@@ -33,7 +33,7 @@ import static javafx.application.Application.launch;
 public class GameMenu extends Application {
     private GameMenuItems gameMenuItems;
     private Scene scene;
-    private static int levelCompleted = 1;
+    private  LevelCount levelCompleted;
     private Group root;
     private int sceneWidth =1330;
     private int sceneHeight=700;
@@ -43,6 +43,7 @@ public class GameMenu extends Application {
         try {
             music();
             root = new Group();
+            levelCompleted=new LevelCount();
             //root.setPrefSize(800, 600);
             InputStream path = Files.newInputStream(Paths.get("src\\main\\resources\\com\\example\\gameofthrones\\GOT1.jpg"));
             Image img = new Image(path);
@@ -200,13 +201,13 @@ public class GameMenu extends Application {
             MenuButton btnHouseLannister = new MenuButton("HOUSE LANNISTER",2);
 
             btnHouseGreyjoy.setOnMouseClicked(event->{
-                if(0 <= levelCompleted)  new LevelOne(scene,root);
+                if(0 <= levelCompleted.getLevelCount())  new LevelOne(scene,root,levelCompleted);
             });
             btnHouseBaratheon.setOnMouseClicked(event->{
-                if(1 <= levelCompleted)  new LevelTwo(scene,root);
+                if(1 <= levelCompleted.getLevelCount())  new LevelTwo(scene,root,levelCompleted);
             });
             btnHouseLannister.setOnMouseClicked(event->{
-                if(2 <= levelCompleted)   new LevelThree(scene,root);
+                if(2 <= levelCompleted.getLevelCount())   new LevelThree(scene,root,levelCompleted);
             });
 
 
@@ -220,10 +221,10 @@ public class GameMenu extends Application {
             getChildren().addAll(bg,homeMenu);
         }
     }
-    private static class MenuButton extends StackPane{
+    private class MenuButton extends StackPane{
         private Text text;
         private int levelNumber = 0;
-       private Rectangle RectbackGround;
+        private Rectangle RectbackGround;
         public MenuButton(String name){
 
             setText(name);
@@ -248,7 +249,7 @@ public class GameMenu extends Application {
         }
         private void addMouseListener(){
             setOnMouseEntered(event->{
-                if(levelNumber <= levelCompleted) {
+                if(levelNumber <= levelCompleted.getLevelCount()) {
                     RectbackGround.setTranslateX(10);
                     text.setTranslateX(10);
                     RectbackGround.setFill(Color.WHITE);
@@ -256,7 +257,7 @@ public class GameMenu extends Application {
                 }
             });
             setOnMouseExited(event->{
-                if(levelNumber <= levelCompleted) {
+                if(levelNumber <= levelCompleted.getLevelCount()) {
                     RectbackGround.setTranslateX(0);
                     text.setTranslateX(0);
                     RectbackGround.setFill(Color.BLACK);
@@ -285,13 +286,13 @@ public class GameMenu extends Application {
             getChildren().addAll(RectbackGround,text);
         }
     }
-   private static class levelButton extends MenuButton{
+    private class levelButton extends MenuButton{
 
-       public levelButton(String name) {
-           super(name);
-       }
+        public levelButton(String name) {
+            super(name);
+        }
 
-   }
+    }
     public static void main(String[] args) {
         launch(args);
     }
