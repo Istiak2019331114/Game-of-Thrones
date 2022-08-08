@@ -11,8 +11,9 @@ import java.util.Random;
 
 public class LevelOne extends Level{
 
-    public LevelOne(Scene scene, Group prevroot) {
-        super(scene,prevroot);
+    public LevelOne(Scene scene, Group prevroot, LevelCount levelCompleted) {
+        super(scene,prevroot,levelCompleted);
+        levelNumber=0;
     }
 
     @Override
