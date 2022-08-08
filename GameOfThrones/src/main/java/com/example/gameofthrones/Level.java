@@ -1,5 +1,6 @@
 package com.example.gameofthrones;
 
+import javafx.animation.Animation;
 import javafx.animation.TranslateTransition;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
@@ -68,13 +69,15 @@ public abstract class Level{
     private String houseLogoName;
     private AnchorPane playerCellPane;
     private int numOfTextFile=10;
-    private int transitionTime= 100;
+    private int transitionTime= 250;
 
     private TranslateTransition translate;
 
     private Node sidePanel;
     private SidePanel sidePanelControler;
     private GameElement curSoldier;
+    private   LevelCount levelCompleted;
+    public static int levelNumber;
     // Row Column based
     public int[][] isPath;
     // Row Column based
@@ -83,7 +86,7 @@ public abstract class Level{
     // Row Column based
     public GameElement[][] gameElements = new GameElement[row][col];
 
-    public Level(Scene scene, Group prevroot) {
+    public Level(Scene scene, Group prevroot,LevelCount levelCompleted) {
 
         maze = new AnchorPane();
 
@@ -92,6 +95,8 @@ public abstract class Level{
         this.scene.setRoot(maze);
 
         this.prevroot = prevroot;
+
+        this.levelCompleted =  levelCompleted;
 
         init();
 
@@ -214,30 +219,32 @@ public abstract class Level{
     }
     private void addListenerToScene()
     {
-        scene.setOnKeyPressed(keyEvent -> {
-            switch (keyEvent.getCode())
-            {
-                case W:
-                case UP:
-                    moveUp();
-                    break;
-                case S:
-                case DOWN:
-                    moveDown();
-                    break;
-                case A:
-                case LEFT:
-                    moveLeft();
-                    break;
-                case D:
-                case RIGHT:
-                    moveRight();
-                    break;
-                case ESCAPE:
-                    backToPreRoot();
-                default: break;
-            }
-        });
+       if ( translate!=null && translate.getStatus().equals(Animation.Status.STOPPED)) {
+           scene.setOnKeyPressed(keyEvent -> {
+               switch (keyEvent.getCode()) {
+                   case W:
+                   case UP:
+                       moveUp();
+                       break;
+                   case S:
+                   case DOWN:
+                       moveDown();
+                       break;
+                   case A:
+                   case LEFT:
+                       moveLeft();
+                       break;
+                   case D:
+                   case RIGHT:
+                       moveRight();
+                       break;
+                   case ESCAPE:
+                       backToPreRoot();
+                   default:
+                       break;
+               }
+           });
+       }
     }
      private void sleep()
      {
@@ -506,7 +513,8 @@ public abstract class Level{
     {
         if(playerRow==destinationRow && playerCol==destinationCol)
         {
-
+            if(levelCompleted.getLevelCount()<=levelNumber) levelCompleted.incrementLevelCount();
+            backToPreRoot();
         }
     }
 }
