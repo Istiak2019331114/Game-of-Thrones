@@ -23,6 +23,12 @@ public class LevelThree extends Level{
         setHouseLogoName("House Lannister.png");
     }
     @Override
+    public void setWinningPanelName()
+    {
+        winningPanelName = "HouseLannisterWinningPanel.jpg";
+        winMessage="House Lannister Conquered";
+    }
+    @Override
     public void setupLevel() {
         maxNumOfRedSoldier = (int) ( getTotalSoldier() * 0.5);
         minNumOfRedSoldier =(int) ( getTotalSoldier() * 0.45);
