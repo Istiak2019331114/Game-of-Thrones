@@ -64,6 +64,7 @@ public abstract class Level{
     // Where Can I put Soliders
     private List<Pair<Integer,Integer>> availableCell;
     private String treeName;
+    public String winningPanelName;
     private String backgroundName;
     private String levelName;
     private String houseLogoName;
@@ -75,6 +76,14 @@ public abstract class Level{
 
     private Node sidePanel;
     private SidePanel sidePanelControler;
+
+    private Node winningPanel;
+    private WinningPanelController winningPanelController;
+    public String winMessage;
+    private Node loosingPanel;
+    private WinningPanelController loosingPanelController;
+    private String looseMessage;
+
     private GameElement curSoldier;
     private   LevelCount levelCompleted;
     public static int levelNumber;
@@ -107,6 +116,10 @@ public abstract class Level{
 
         setMazeBackground();
 
+        setWinningPanel();
+
+        setLoosingPanel();
+
         addPlayerToMaze();
 
         addAnimationToPlayer();
@@ -114,6 +127,7 @@ public abstract class Level{
         addTreeToMaze();
 
         addSidePanelToMaze();
+
 
         addListenerToScene();
 
@@ -171,6 +185,32 @@ public abstract class Level{
         sidePanelControler.setCurrentHouseLogo(houseLogoName);
         maze.getChildren().add(sidePanel);
     }
+    private void setWinningPanel(){
+        setWinningPanelName();
+        FXMLLoader loader=null;
+        try {
+            loader = new FXMLLoader(Level.class.getResource("winning-panel.fxml"));
+            winningPanel = loader.load();
+            winningPanelController = loader.getController();
+        } catch (IOException e) {
+            System.out.println(e);
+        }
+        winningPanelController.setWinningPanelImageView(winningPanelName);
+        winningPanelController.setPreviousRoot(prevroot);
+        winningPanelController.setWinLooseMessage(winMessage);
+    }
+    private void setLoosingPanel(){
+        FXMLLoader loader=null;
+        try {
+            loader = new FXMLLoader(Level.class.getResource("winning-panel.fxml"));
+            loosingPanel = loader.load();
+            loosingPanelController = loader.getController();
+        } catch (IOException e) {
+            System.out.println(e);
+        }
+        loosingPanelController.setWinningPanelImageView("LoosingImage.jpg");
+        loosingPanelController.setPreviousRoot(prevroot);
+    }
     private void calculateSoldiers()
     {
         for(int i=0;i<row;i++)
@@ -180,6 +220,7 @@ public abstract class Level{
     public abstract void setTheme();
     public abstract void setSidePanel();
     public abstract void setupLevel();
+    public abstract void setWinningPanelName();
 
     private void setMazeBackground(){
         String image = getClass().getResource(backgroundName).toExternalForm();
@@ -247,10 +288,10 @@ public abstract class Level{
            });
        }
     }
-     private void sleep()
+     private void sleep(int sleepingTime)
      {
          try{
-             Thread.sleep(transitionTime);
+             Thread.sleep(sleepingTime);
          } catch (InterruptedException e) {
              throw new RuntimeException(e);
          }
@@ -270,7 +311,7 @@ public abstract class Level{
                 sidePanelControler.setPlayerPower(player.getPower());
                 sidePanelControler.setKillCount(++killCount);
                 if(checkWiningCondition()==false) checkLosingCondition();
-//            sleep();
+//            sleep(3000);
             }
         }
     }
@@ -290,7 +331,7 @@ public abstract class Level{
                 sidePanelControler.setPlayerPower(player.getPower());
                 sidePanelControler.setKillCount(++killCount);
                 if(checkWiningCondition()==false) checkLosingCondition();
-//            sleep();
+//            sleep(3000);
             }
         }
     }
@@ -310,7 +351,7 @@ public abstract class Level{
                 sidePanelControler.setPlayerPower(player.getPower());
                 sidePanelControler.setKillCount(++killCount);
                 if(checkWiningCondition()==false) checkLosingCondition();
-//            sleep();
+//            sleep(3000);
             }
         }
     }
@@ -329,7 +370,7 @@ public abstract class Level{
                 curSoldier.updatePlayerPower(player);
                 sidePanelControler.setPlayerPower(player.getPower());
                 sidePanelControler.setKillCount(++killCount);
-//            sleep();
+//            sleep(3000);
             }
             if(checkWiningCondition()==false) checkLosingCondition();
         }
@@ -505,6 +546,7 @@ public abstract class Level{
     {
         this.houseLogoName= houseLogoName;
     }
+
     public int[][] getVisited()
     {
         return visited;
@@ -515,7 +557,7 @@ public abstract class Level{
         if(playerRow==destinationRow && playerCol==destinationCol)
         {
             if(levelCompleted.getLevelCount()<=levelNumber) levelCompleted.incrementLevelCount();
-            backToPreRoot();
+            maze.getChildren().add(winningPanel);
             return true;
         }
         return  false;
@@ -546,9 +588,9 @@ public abstract class Level{
         }
         if(flag==false)
         {
+//            sleep(5000);
             System.out.println(playerRow+" "+playerCol);
-            System.out.println("You LOsser!! get out");
-//            backToPreRoot();
+            maze.getChildren().add(loosingPanel);
         }
     }
 
