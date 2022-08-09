@@ -14,7 +14,7 @@ public class HelloApplication extends Application {
         Scene scene = new Scene(new AnchorPane());
         Group group = new Group();
 
-        LevelOne levelOne = new LevelOne(scene,group);
+       // LevelOne levelOne = new LevelOne(scene,group);
 
         stage.setTitle("Hello!");
         stage.setScene(scene);
