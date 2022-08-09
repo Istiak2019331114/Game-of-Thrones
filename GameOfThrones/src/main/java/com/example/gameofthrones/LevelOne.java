@@ -27,7 +27,12 @@ public class LevelOne extends Level{
         setLevelName("House Greyjoy");
         setHouseLogoName("House Greyjoy.png");
     }
-
+    @Override
+    public void setWinningPanelName()
+    {
+        winningPanelName="HouseGrejoyWinningPanel.jpg";
+        winMessage="House Greyjoy Conquered";
+    }
     @Override
     public void setupLevel() {
         maxNumOfRedSoldier = (int) ( getTotalSoldier() * 0.45);
