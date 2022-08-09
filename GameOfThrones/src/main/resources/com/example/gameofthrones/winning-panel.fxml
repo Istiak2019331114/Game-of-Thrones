@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.gameofthrones.WinningPanelController">
+   <children>
+      <AnchorPane layoutX="14.0" prefHeight="700.0" prefWidth="1330.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <ImageView fx:id="winningPanelImageView" fitHeight="700.0" fitWidth="1330.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+            <Button fx:id="newGameMenuButton" layoutX="1107.0" layoutY="625.0" mnemonicParsing="false" onAction="#backToPreviousRoot" prefHeight="40.0" prefWidth="180.0" text="NEXT" textFill="#bd2a2a">
+               <font>
+                  <Font name="Georgia" size="20.0" />
+               </font>
+            </Button>
+            <Text fx:id="winLooseMessage" fill="#cdc0c0" layoutX="60.0" layoutY="588.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="200.0">
+               <font>
+                  <Font name="Georgia" size="27.0" />
+               </font>
+            </Text>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>
