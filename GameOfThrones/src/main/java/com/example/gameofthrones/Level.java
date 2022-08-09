@@ -55,13 +55,13 @@ public abstract class Level{
     public int minNumOfRedSoldier =10;
     public int maxNumOfTent=5;
     public int minNumOfTent=3;
-
     public int powerIncrement =20;
     public int soldierBasePower =200;
 
     private int[] basePowerAtCol;
 
     private Random rand = new Random(System.currentTimeMillis());
+    // Where Can I put Soliders
     private List<Pair<Integer,Integer>> availableCell;
     private String treeName;
     private String backgroundName;
@@ -123,10 +123,11 @@ public abstract class Level{
 
         setSoldierInWiningPath();
 
+        checkLosingCondition();
     }
 
 
-
+// Initializes isPath and visited array
     void init() {
         isPath = new int[row][col];
 
@@ -157,7 +158,7 @@ public abstract class Level{
     public void addSidePanelToMaze(){
         FXMLLoader loader=null;
         try {
-            loader = new FXMLLoader(HelloApplication.class.getResource("side-panel.fxml"));
+            loader = new FXMLLoader(Level.class.getResource("side-panel.fxml"));
             sidePanel = loader.load();
             sidePanelControler = loader.getController();
         } catch (IOException e) {
@@ -268,10 +269,10 @@ public abstract class Level{
                 curSoldier.updatePlayerPower(player);
                 sidePanelControler.setPlayerPower(player.getPower());
                 sidePanelControler.setKillCount(++killCount);
+                if(checkWiningCondition()==false) checkLosingCondition();
 //            sleep();
             }
         }
-        checkWiningCondition();
     }
     private void moveDown()
     {
@@ -281,17 +282,17 @@ public abstract class Level{
             if(curSoldier.check(player)){
                 playerRow +=1;
                 visited[playerRow][playerCol] = 1;
-            translate.setByY(rectangleHeight);
-            translate.setByX(0);
+                translate.setByY(rectangleHeight);
+                translate.setByX(0);
                 gameElements[playerRow][playerCol].removeFromMaze();
                 translate.play();
                 curSoldier.updatePlayerPower(player);
                 sidePanelControler.setPlayerPower(player.getPower());
                 sidePanelControler.setKillCount(++killCount);
+                if(checkWiningCondition()==false) checkLosingCondition();
 //            sleep();
             }
         }
-        checkWiningCondition();
     }
     private void moveRight()
     {
@@ -301,17 +302,17 @@ public abstract class Level{
             if(curSoldier.check(player)){
                 playerCol +=1;
                 visited[playerRow][playerCol] = 1;
-            translate.setByX(rectangleWidth);
-            translate.setByY(0);
+                translate.setByX(rectangleWidth);
+                translate.setByY(0);
                 gameElements[playerRow][playerCol].removeFromMaze();
                 translate.play();
                 curSoldier.updatePlayerPower(player);
                 sidePanelControler.setPlayerPower(player.getPower());
                 sidePanelControler.setKillCount(++killCount);
+                if(checkWiningCondition()==false) checkLosingCondition();
 //            sleep();
             }
         }
-        checkWiningCondition();
     }
     private void moveLeft()
     {
@@ -321,8 +322,8 @@ public abstract class Level{
             if(curSoldier.check(player)){
                 playerCol -=1;
                 visited[playerRow][playerCol] = 1;
-            translate.setByX(-rectangleWidth);
-            translate.setByY(0);
+                translate.setByX(-rectangleWidth);
+                translate.setByY(0);
                 gameElements[playerRow][playerCol].removeFromMaze();
                 translate.play();
                 curSoldier.updatePlayerPower(player);
@@ -330,8 +331,8 @@ public abstract class Level{
                 sidePanelControler.setKillCount(++killCount);
 //            sleep();
             }
+            if(checkWiningCondition()==false) checkLosingCondition();
         }
-        checkWiningCondition();
     }
    //-----------------------------------------------------------------------------------------
    private void setSoldiers()
@@ -509,12 +510,46 @@ public abstract class Level{
         return visited;
     }
 
-    private void checkWiningCondition()
+    private boolean checkWiningCondition()
     {
         if(playerRow==destinationRow && playerCol==destinationCol)
         {
             if(levelCompleted.getLevelCount()<=levelNumber) levelCompleted.incrementLevelCount();
             backToPreRoot();
+            return true;
+        }
+        return  false;
+    }
+    private void checkLosingCondition()
+    {
+        boolean flag=false;
+//        GameElement
+        // Checking Left is available
+        if(playerCol -1 >=0 && visited[playerRow][playerCol -1]==0) {
+            curSoldier = gameElements[playerRow][playerCol - 1];
+            if (curSoldier.check(player)) flag=true;
+        }
+        // Checking Right is available
+        if(playerCol +1<col && visited[playerRow][playerCol +1]==0) {
+            curSoldier = gameElements[playerRow][playerCol + 1];
+            if (curSoldier.check(player)) flag = true;
+        }
+        // Checking Down is available
+        if(playerRow +1<row && visited[playerRow +1][playerCol]==0) {
+            curSoldier = gameElements[playerRow + 1][playerCol];
+            if (curSoldier.check(player)) flag = true;
+        }
+        // Checking Up is available
+        if(playerRow -1 >=0 && visited[playerRow -1][playerCol]==0 ) {
+            curSoldier = gameElements[playerRow - 1][playerCol];
+            if (curSoldier.check(player)) flag = true;
+        }
+        if(flag==false)
+        {
+            System.out.println(playerRow+" "+playerCol);
+            System.out.println("You LOsser!! get out");
+//            backToPreRoot();
         }
     }
+
 }
