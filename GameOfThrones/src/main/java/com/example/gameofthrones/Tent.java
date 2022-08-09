@@ -7,9 +7,9 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
 public class Tent extends GameElement {
-    private static int count = 0;
     private int sleeptime=3000;
     private GameElement solider;
+    private boolean isRevealed= false;
     public Tent(int x, int y, int height, int width, AnchorPane pane, GameElement solider) {
         super(x, y, height, width, pane);
         this.solider = solider;
@@ -34,13 +34,11 @@ public class Tent extends GameElement {
     @Override
     public boolean check(GameElement player)
     {
-        revealSoldier();
-        if(count%2==0)
+        if(!isRevealed)
         {
-            count++;
-            return false;
+            revealSoldier();
+            isRevealed=true;
         }
-        count++;
         return solider.check(player);
     }
     // Updates Player Power for this Soldier
@@ -52,8 +50,7 @@ public class Tent extends GameElement {
     @Override
     public void removeFromMaze()
     {
-        getMaze().getChildren().remove(getCellPane());
-        getMaze().getChildren().remove(solider.getCellPane());
+        solider.removeFromMaze();
     }
     private void sleep()
     {
