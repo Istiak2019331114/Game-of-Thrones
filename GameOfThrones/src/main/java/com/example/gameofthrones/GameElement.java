@@ -58,6 +58,7 @@ public abstract class GameElement {
    }
 
    // For Soldiers
+   // (x,y) coordinate of cellPane in maze
    public GameElement(int x, int y, int height, int width, AnchorPane maze, int power) {
       this.x = x;
       this.y = y;
