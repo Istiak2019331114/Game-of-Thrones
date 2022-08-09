@@ -21,6 +21,12 @@ public class LevelTwo extends Level{
         setHouseLogoName("House Baratheon.png");
     }
     @Override
+    public void setWinningPanelName()
+    {
+       winningPanelName="HouseBaratheonWinningPanel.jpg";
+        winMessage="House Baratheon Conquered";
+    }
+    @Override
     public void setupLevel() {
         maxNumOfRedSoldier = (int) ( getTotalSoldier() * 0.5);
         minNumOfRedSoldier =(int) ( getTotalSoldier() * 0.45);
