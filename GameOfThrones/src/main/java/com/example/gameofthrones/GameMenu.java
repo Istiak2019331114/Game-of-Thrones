@@ -199,6 +199,8 @@ public class GameMenu extends Application {
             MenuButton btnHouseGreyjoy = new MenuButton("HOUSE GREYJOY",0);
             MenuButton btnHouseBaratheon = new MenuButton("HOUSE BARATHEON",1);
             MenuButton btnHouseLannister = new MenuButton("HOUSE LANNISTER",2);
+            MenuButton btnHouseStark = new MenuButton("HOUSE STARK",3);
+            MenuButton btnWesterosFinalBattle = new MenuButton("WESTEROS FINAL BATTLE",4);
 
             btnHouseGreyjoy.setOnMouseClicked(event->{
                 if(0 <= levelCompleted.getLevelCount())  new LevelOne(scene,root,levelCompleted);
@@ -209,12 +211,19 @@ public class GameMenu extends Application {
             btnHouseLannister.setOnMouseClicked(event->{
                 if(2 <= levelCompleted.getLevelCount())   new LevelThree(scene,root,levelCompleted);
             });
+            btnHouseStark.setOnMouseClicked(event->{
+                if(3 <= levelCompleted.getLevelCount())  new LevelFour(scene,root,levelCompleted);
+            });
+            btnWesterosFinalBattle.setOnMouseClicked(event->{
+                if(4 <= levelCompleted.getLevelCount())   new LevelFive(scene,root,levelCompleted);
+            });
+
 
 
 
             homeMenu.getChildren().addAll(btnNewGame,btnResum,btnOptions,btnExit);
             optionsMenu.getChildren().addAll(btnBack,btnSound,btnVideo);
-            newGameMenu.getChildren().addAll(btnHouseGreyjoy,btnHouseBaratheon,btnHouseLannister,btnBackk);
+            newGameMenu.getChildren().addAll(btnHouseGreyjoy,btnHouseBaratheon,btnHouseLannister,btnHouseStark,btnWesterosFinalBattle,btnBackk);
             Rectangle bg = new Rectangle(sceneWidth,sceneHeight);
             bg.setFill(Color.GREY);
             bg.setOpacity(0);
