@@ -8,7 +8,7 @@ public class LevelThree extends Level{
 
     public LevelThree(Scene scene, Group prevroot, LevelCount levelCompleted) {
         super(scene,prevroot,levelCompleted);
-        levelNumber=1;
+        levelNumber=2;
     }
 
     @Override
