@@ -7,7 +7,7 @@ import javafx.scene.Scene;
 public class LevelTwo extends Level{
     public LevelTwo(Scene scene, Group prevroot, LevelCount levelCompleted) {
         super(scene,prevroot,levelCompleted);
-        levelNumber=2;
+        levelNumber=1;
     }
     @Override
     public void setTheme() {
